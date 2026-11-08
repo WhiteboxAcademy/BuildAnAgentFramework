@@ -1,0 +1,286 @@
+<title>Whitebox: Cost and latency</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a black box header opens onto a white reading column; media breaks wider. */
+:root {
+  --bg: #fbfbf9; --surface: #ffffff; --ink: #16181d; --muted: #5d616b; --rule: #d9dade;
+  --accent: #2a4bd7; --tint: #e7ebfb; --box: #0c0d10; --on-box: #fbfbf9; --box-muted: #a9adb8;
+  --term: #101218; --term-ink: #e4e6ec; --term-cmd: #9db1ff;
+  --display: "Bricolage Grotesque", Georgia, serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111318; --surface: #191c23; --ink: #e9eaee; --muted: #a4a8b3; --rule: #2e323c;
+    --accent: #9db1ff; --tint: #20274a; --box: #050507; --on-box: #fbfbf9; --box-muted: #a9adb8;
+    --term: #08090c; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111318; --surface: #191c23; --ink: #e9eaee; --muted: #a4a8b3; --rule: #2e323c;
+  --accent: #9db1ff; --tint: #20274a; --box: #050507; --on-box: #fbfbf9; --box-muted: #a9adb8;
+  --term: #08090c; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.65 var(--body); }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 68rem; margin: 0 auto; min-width: 0; }
+.col { max-width: 42rem; display: grid; gap: 1rem; min-width: 0; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.6rem, 7vw, 4.4rem); line-height: 1.02; font-weight: 700; letter-spacing: -0.015em; }
+h2 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); line-height: 1.15; font-weight: 700; }
+h3 { font-size: 1.2rem; line-height: 1.3; font-weight: 700; }
+p { margin: 0; }
+a { color: var(--accent); }
+a:focus-visible, video:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+code { font-family: var(--mono); font-size: 0.92em; }
+
+header.mast { background: var(--box); color: var(--on-box); padding-block: 1.6rem 3rem; }
+.mast .wrap { display: grid; gap: 2.4rem; }
+.brand { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font: 500 1rem var(--display); }
+.brand span:first-child { display: flex; align-items: center; gap: 0.55rem; }
+.brand i { width: 0.95rem; height: 0.95rem; border: 3px solid currentColor; display: block; }
+.brand span:last-child { font: 400 0.85rem var(--mono); color: var(--box-muted); align-self: center; }
+.mast .intro { display: grid; gap: 1rem; max-width: 46rem; }
+.mast .dek { font-size: 1.2rem; color: var(--box-muted); }
+.meta { font: 400 0.85rem var(--mono); color: var(--box-muted); }
+
+main { padding-block: 0 4rem; }
+section { padding-block: 3.2rem 0; display: grid; gap: 1.4rem; }
+.label { font: 600 0.78rem/1.2 var(--mono); color: var(--accent); }
+.lede { font-size: 1.15rem; }
+
+figure { margin: 0; display: grid; gap: 0.5rem; min-width: 0; }
+figcaption { font-size: 0.86rem; color: var(--muted); }
+video { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 1440 / 900; background: #000; }
+
+ol.loop { margin: 0; padding-left: 1.3rem; display: grid; gap: 0.35rem; }
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2.4rem; counter-reset: step; }
+ol.steps > li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 1.6rem; align-items: start; counter-increment: step; }
+ol.steps .txt { display: grid; gap: 0.45rem; min-width: 0; }
+ol.steps .txt h3::before { content: counter(step); display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; margin-right: 0.55rem; background: var(--ink); color: var(--bg); font: 600 0.85rem/1 var(--mono); vertical-align: 0.1em; }
+ol.steps img { width: 100%; height: auto; display: block; border: 1px solid var(--rule); }
+@media (max-width: 720px) { ol.steps > li { grid-template-columns: minmax(0, 1fr); } }
+
+pre { margin: 0; background: var(--term); color: var(--term-ink); padding: 1rem 1.1rem; overflow-x: auto; font: 400 0.86rem/1.6 var(--mono); }
+pre .cmd { color: var(--term-cmd); }
+.tablebox { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.98rem; }
+th, td { text-align: left; padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; color: var(--muted); }
+td { font-variant-numeric: tabular-nums; }
+.fails { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.fails div { background: var(--tint); padding: 1rem 1.1rem; display: grid; gap: 0.3rem; align-content: start; min-width: 0; }
+.list { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.35rem; }
+.next { background: var(--box); color: var(--on-box); padding: 1.4rem 1.5rem; display: grid; gap: 0.3rem; }
+.next span { font: 400 0.85rem var(--mono); color: var(--box-muted); }
+footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); font-size: 0.85rem; color: var(--muted); }
+</style>
+
+<header class="mast gutter">
+  <div class="wrap">
+    <div class="brand"><span><i></i>Whitebox Academy</span><span>Build an AI Agent from Scratch</span></div>
+    <div class="intro">
+      <span class="meta">Chapter 33 of 35 · Part 7: Multi-agent and production · About 2 hours</span>
+      <h1>Cost and latency</h1>
+      <p class="dek">Measure where an agent's tokens and time go, then test every cut against the eval, count the cost of each right answer, and run questions at the same time.</p>
+    </div>
+  </div>
+</header>
+
+<main class="gutter">
+  <div class="wrap">
+<section>
+<figure>
+<video controls playsinline preload="metadata" poster="media/04-breakdown.jpg">
+<source src="media/video.mp4" type="video/mp4">
+</video>
+<figcaption>Chapter video, 4 minutes 47 seconds, no sound. It starts with a 27-second recap, and captions on screen explain each step.</figcaption>
+</figure>
+</section>
+<section>
+<div class="col"><span class="label">Where we are</span>
+<h2>Every call has a price</h2>
+<p class="lede">Chapter 32 moved to a cloud model, so every call now costs money, and some took far longer than others. This chapter asks where the money goes, and where the time goes.</p>
+<p><strong>Measure each run, then decide what to cut.</strong> Some cuts cost more than they save.</p>
+<p><a href="https://claude.ai/artifact/1uGgX3WK7v3D5HyfvB782p#start-ollama">Start Ollama</a>, activate the <code>.venv</code> from chapter 05, and work in <code>chapters/33-cost-and-latency/code</code>. The cloud scripts use chapter 32's key and cost under a cent each, and our results are saved.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">Measure</span>
+<h2>A Meter on the agent</h2></div>
+<div class="col"><p><code>Meter</code> is a hook. After each model call, it keeps the time and the token counts, and with prices it adds up the cost.</p></div>
+<pre>    def after_model(self, reply):
+        seconds = round(self.clock() - self.model_started, 3)
+        self.steps.append(Step(seconds, reply.tokens_in, reply.tokens_out, reply.tokens_cached))</pre>
+<pre><span class="cmd">$ python3 measure_one.py ollama/qwen2.5:7b</span>
+ollama/qwen2.5:7b: The initial till float amount is £150. [cash-handling.md]
+Call   Tokens in   Out  Cached  Seconds
+1            249    24       0     0.52
+2            492    18       0     1.04
+Model 1.56 s, tools 0.07 s, cost $0.000000</pre>
+<pre><span class="cmd">$ python3 measure_one.py gemini/gemini-3.1-flash-lite</span>
+gemini/gemini-3.1-flash-lite: Each till starts the day with a float of £150. [cash-handling.md]
+Call   Tokens in   Out  Cached  Seconds
+1            173    18       0    34.79
+2            413    21       0     1.47
+Model 36.26 s, tools 0.10 s, cost $0.000205</pre>
+<figure><img src="media/02-measure.jpg" alt="The first cloud call takes 34.8 seconds" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>Two calls: one to search, one to answer, and the second reads about twice as much. The cloud model's first call took 34.8 seconds, and its second 1.5. One run tells you little about time.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">Tokens</span>
+<h2>Where the tokens go</h2></div>
+<pre><span class="cmd">$ python3 where_tokens_go.py ollama/qwen2.5:7b</span>
+Call       system prompt tool descriptions          question      tool results model&#x27;s own turns
+1                    398               282                47                 0                 0
+2                    398               282                47             1,145                45
+Share                30%               21%                4%               43%                2%
+Characters, not tokens. A token is about four characters of English.</pre>
+<figure><img src="media/03-tokens.jpg" alt="Search results are the biggest part" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>The system prompt and tool descriptions go with every call, unchanged. Across a whole pass of the eval:</p></div>
+<pre><span class="cmd">$ python3 read_results.py breakdown</span>
+Share of everything sent, one pass of 42 questions
+                            system      tools   question    results  own turns
+qwen2.5:7b                     29%        20%         4%        43%         4%
+gemini-3.1-flash-lite          17%        12%         2%        65%         3%
+system = system prompt, tools = tool descriptions, results = tool results,
+own turns = the model&#x27;s earlier turns
+qwen2.5:7b: model 117 s, tools 3 s, of 120 s
+gemini-3.1-flash-lite: model 210 s, tools 8 s, of 218 s</pre>
+<figure><img src="media/04-breakdown.jpg" alt="The model is almost all of the time" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p><strong>The question is the smallest part.</strong> Search results are the biggest. And the model took 117 of 120 seconds, so speeding up the search would save almost nothing.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">Cuts</span>
+<h2>Send less, and check the score</h2></div>
+<div class="col"><p><code>k</code> is the number of search results, <code>size</code> the words in each chunk. Three passes of the eval on each change:</p></div>
+<pre><span class="cmd">$ python3 read_results.py less</span>
+qwen2.5:7b, three passes of 42. k is search results per search, size is words per chunk
+Setup             Right  Tokens in  Seconds
+k=3, size 60     112/126   114,520      410
+k=1, size 60      99/126    88,495      306
+k=5, size 60     108/126   147,019      485
+k=3, size 30     101/126   115,096      408
+k=3, size 120    113/126   141,743      481</pre>
+<figure><img src="media/05-less.jpg" alt="Every cut lost points" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>One result cut tokens by about a fifth, and the score from 112 to 99. Every cut lost points. On a paid model, count the cost of each right answer:</p></div>
+<pre><span class="cmd">$ python3 read_results.py cost</span>
+gemini-3.1-flash-lite, one pass of 42, chunks of 60 words
+Setup    Right  Tokens in     Cost  Per right answer
+k=1      38/42     54,227  $0.0184         $0.000484
+k=3      41/42     69,845  $0.0218         $0.000532
+k=5      42/42    106,631  $0.0311         $0.000740</pre>
+<figure><img src="media/06-cost.jpg" alt="One result is cheapest per right answer, five get every one right" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>One result is cheapest per right answer. Only five got every question right. The measurement tells you the price of each choice. The choice depends on what a wrong answer costs you.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">Time</span>
+<h2>First words, and the spread</h2></div>
+<pre><span class="cmd">$ python3 first_words.py ollama/qwen2.5:7b</span>
+Try   First words  Whole reply
+1           0.21s        1.24s
+2           0.02s        1.36s
+3           0.03s        0.88s</pre>
+<pre><span class="cmd">$ python3 first_words.py gemini/gemini-3.1-flash-lite</span>
+Try   First words  Whole reply
+1           1.95s        1.95s
+2           2.12s        2.12s
+3           1.29s        1.29s</pre>
+<figure><img src="media/07-first.jpg" alt="Gemini's first words arrive with the whole reply" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>On 7B the first words arrive in a few hundredths of a second. On Flash-Lite they arrive with the whole reply, because chapter 32's <code>GeminiModel</code> doesn't stream. Gemini has a streaming endpoint we didn't write.</p></div>
+<pre><span class="cmd">$ python3 read_results.py stream</span>
+Model                    First words  Whole reply
+qwen2.5:7b                     1.00s        1.80s
+qwen2.5:7b                     0.03s        0.86s
+qwen2.5:7b                     0.03s        1.06s
+gemini-3.1-flash-lite          5.77s        5.77s
+gemini-3.1-flash-lite          1.68s        1.68s
+gemini-3.1-flash-lite         17.47s       17.47s</pre>
+<figure><img src="media/08-spread.jpg" alt="The same short question took 1.7 to 17.5 seconds" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>The same short question took 1.7 seconds once and 17.5 another time. One timing proves nothing.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">Many at once</span>
+<h2>Waiting in parallel</h2></div>
+<pre>def run_many(make_agent, questions, workers=4):
+    &quot;&quot;&quot;Run each question on its own new agent, several at a time.
+
+    Results come back in the order of the questions, whatever order they finish in.
+    &quot;&quot;&quot;
+    with ThreadPoolExecutor(workers) as pool:
+        return list(pool.map(lambda question: make_agent().run(question), questions))</pre>
+<div class="col"><p>Each question gets a new agent, because hooks keep state. <strong>Predict:</strong> how much faster is eight at once?</p></div>
+<pre><span class="cmd">$ python3 read_results.py parallel</span>
+Model                    At once  Right  Seconds
+qwen2.5:7b                     1  38/42      147
+qwen2.5:7b                     4  36/42      147
+qwen2.5:7b                     8  37/42      135
+gemini-3.1-flash-lite          1  40/42      447
+gemini-3.1-flash-lite          4  41/42       96
+gemini-3.1-flash-lite          8  40/42       64</pre>
+<figure><img src="media/09-parallel.jpg" alt="Eight at once makes the cloud run 7 times faster" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>Flash-Lite went from 447 seconds to 64, with the same score. 7B on one Mac barely changed. Running at once saves time, not money, and a provider limits requests per minute.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">Caching</span>
+<h2>When it happens</h2></div>
+<div class="col"><p>Google can keep the start of a prompt it has just seen, and charge a tenth for it next time. We sent the whole handbook five times:</p></div>
+<pre><span class="cmd">$ python3 cache_check.py gemini/gemini-3.1-flash-lite</span>
+Try   Tokens in  From cache  Cost if none cached       Cost
+1         4,869       2,033            $0.001231  $0.000773
+2         4,869       2,033            $0.001231  $0.000773
+3         4,869       2,033            $0.001231  $0.000773
+4         4,869       2,033            $0.001231  $0.000773
+5         4,869       2,033            $0.001231  $0.000773
+Cached input costs a tenth of the normal price on both models here, by Google&#x27;s pricing page.</pre>
+<figure><img src="media/10-cache.jpg" alt="Flash-Lite serves part of the prompt from its cache" loading="lazy" width="1440" height="900"></figure>
+<pre><span class="cmd">$ python3 cache_check.py gemini/gemini-3.6-flash</span>
+Try   Tokens in  From cache  Cost if none cached       Cost
+1         4,869           0            $0.005309  $0.005309
+2         4,869           0            $0.005317  $0.005317
+3         4,869           0            $0.005197  $0.005197
+4         4,869           0            $0.005298  $0.005298
+5         4,869           0            $0.006078  $0.006078
+Cached input costs a tenth of the normal price on both models here, by Google&#x27;s pricing page.</pre>
+<div class="col"><p>Flash-Lite cached 2,033 tokens a call and charged 37% less. 3.6 Flash cached nothing, every time. Keep the start of your prompts the same, then check <code>tokens_cached</code>: caching helps when it happens, and you can't count on it.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">The point</span>
+<h2>What to cut</h2></div>
+<figure><img src="media/11-cut.jpg" alt="Measure first, check against the eval, cost per right answer, model time first" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><ol class="list"><li><strong>Measure first.</strong> Find the biggest part, in tokens and seconds.</li><li><strong>Check every cut against the eval.</strong> A cut that loses points isn't a saving.</li><li><strong>Count cost per right answer,</strong> not per call.</li><li><strong>For time, look at the model first.</strong> Run at once on the cloud, and stream when people watch.</li><li><strong>Keep the start of every prompt the same,</strong> so caching can happen, and check whether it did.</li></ol></div>
+</section>
+<section>
+<div class="col"><span class="label">Your turn</span>
+<h2>Exercises</h2></div>
+<div class="col"><p>Open <code>exercises.py</code> and complete the five TODOs: <code>shares</code>, <code>cost_per_right</code>, <code>cached_cost</code>, <code>ModelTimer</code> and <code>run_all</code>. Then run <code>python3 -m pytest test_exercises.py</code> from that folder. They use a fake model, so there's no key and Ollama doesn't need to run.</p></div>
+<pre><span class="cmd">$ python3 -m pytest test_exercises.py</span>
+FAILED test_exercises.py::test_todo_1_shares - AssertionError: assert None ==...
+FAILED test_exercises.py::test_todo_2_cost_per_right - assert None == 0.000484
+FAILED test_exercises.py::test_todo_3_cached_cost - assert None == 0.001222
+FAILED test_exercises.py::test_todo_4_model_timer - assert [] == [2.5, 1.0]
+FAILED test_exercises.py::test_todo_5_run_all - AssertionError: assert None =...
+============================== 5 failed in 0.05s ===============================</pre>
+<figure><img src="media/12-exercises.jpg" alt="All five checks fail before you start" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>You've finished when you see <code>5 passed</code>. Worked answers are in <code>solutions/exercises.py</code>.</p></div>
+</section>
+<section>
+<div class="col">
+<span class="label">Recap</span>
+<h2>What you opened</h2>
+<ul class="list"><li><code>Meter</code> records tokens and time for every model call. <code>where_tokens_go</code> splits what each call sends.</li><li>Search results were the biggest part. The question was 2% to 4%.</li><li>The model was 97% of the time on 7B.</li><li>Fewer search results saved about a fifth of the tokens, and lost points.</li><li>Per right answer, one result was cheapest. Only five got every question right.</li><li>Eight at once made the cloud eval about 7 times faster, and did little on one Mac.</li><li>Flash-Lite cached part of a repeated prompt, 3.6 Flash never did.</li></ul>
+<p>Measure each run, then decide what to cut.</p>
+<p>These counts come from one Mac and Google's API on 8 November 2026, and any of them could change. The sources are listed in the <a href="https://github.com/WhiteboxAcademy/BuildAnAgentFramework/tree/main/chapters/33-cost-and-latency">chapter’s README</a>.</p>
+</div>
+<div class="next"><span>Next</span><h3>Finish the Part 7 checkpoint, then start Part 8</h3></div>
+</section>
+
+    <footer>
+      <p>Get the code at <a href="https://github.com/WhiteboxAcademy/BuildAnAgentFramework">github.com/WhiteboxAcademy/BuildAnAgentFramework</a>. Code is under the MIT License. Articles and videos are under CC BY 4.0.</p>
+    </footer>
+  </div>
+</main>

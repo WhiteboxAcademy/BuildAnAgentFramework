@@ -1,0 +1,8 @@
+$ python3 cache_check.py gemini/gemini-3.6-flash
+Try   Tokens in  From cache  Cost if none cached       Cost
+1         4,869           0            $0.005309  $0.005309
+2         4,869           0            $0.005317  $0.005317
+3         4,869           0            $0.005197  $0.005197
+4         4,869           0            $0.005298  $0.005298
+5         4,869           0            $0.006078  $0.006078
+Cached input costs a tenth of the normal price on both models here, by Google's pricing page.

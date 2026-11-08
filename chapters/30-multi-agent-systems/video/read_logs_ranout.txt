@@ -1,0 +1,9 @@
+$ python3 read_results.py logs ran-out
+How far off each try was, on average across the four branches
+Count    Setup                       Off by
+ran-out  one agent, search           2493%, 2276%, 1175%
+ran-out  one call, everything        71%, 72%, 71%
+ran-out  team of 48, workers count   22%, 21%, 24%
+ran-out  team of 48, code counts     28%, 27%, 27%
+ran-out  team of 4, code counts      158%
+ran-out  text search, obvious word   0%

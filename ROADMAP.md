@@ -57,7 +57,7 @@ Work through the chapters in order and tick each one off as you finish it.
 
 - [ ] 30 Multi-agent systems
 - [ ] 31 Security
-- [ ] 32 Switching to Gemini
+- [ ] 32 Switching models
 - [ ] 33 Cost and latency
 
 ## Part 8: Capstone (about 13 hours)

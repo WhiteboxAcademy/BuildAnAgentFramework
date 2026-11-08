@@ -1,0 +1,12 @@
+$ python3 escape.py
+The full path is /tmp/office/private/staff_pay.txt
+Chapter 14's read_file
+  a file in the inbox   From: Priya The oat milk ran out at the Harbour branch before ten on Sat
+  climbs out with ..    Payroll code for this month: PAY-CODE-7741
+  a full path           Payroll code for this month: PAY-CODE-7741
+  a link in the inbox   Payroll code for this month: PAY-CODE-7741
+folder_tools
+  a file in the inbox   From: Priya The oat milk ran out at the Harbour branch before ten on Sat
+  climbs out with ..    Error: ../private/staff_pay.txt is outside the folder this tool may use
+  a full path           Error: /tmp/office/private/staff_pay.txt is outside the folder this tool
+  a link in the inbox   Error: inbox/notes.txt is outside the folder this tool may use

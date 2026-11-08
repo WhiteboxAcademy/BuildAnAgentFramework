@@ -1,0 +1,9 @@
+$ python3 first_router.py
+handbook  How much is the till float?
+          The initial float for each till is £150. [cash-handling.md]
+handbook  How much did the film crew pay to use Old Mill?
+          I don't know. The handbook does not contain information about payments to the film crew for usin
+handbook  Who was the guest at the Riverside cupping club in June 2025?
+          I don't know the specific guest for the Riverside cupping club in June 2025 based on the informa
+records   How much extra do oat, soya and coconut milk cost?
+          I don't know the specific extra costs for oat, soya, and coconut milk from the information provi

@@ -1,0 +1,8 @@
+$ python3 big_job.py
+48 logs, 245,680 characters
+
+Branch      Exact pattern Word delivery  Team of 12
+harbour                45            86          43
+old-mill               38            75          46
+riverside              51           105          48
+station                41            78          38

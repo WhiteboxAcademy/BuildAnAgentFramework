@@ -1,0 +1,6 @@
+$ python3 measure_one.py gemini/gemini-3.1-flash-lite
+gemini/gemini-3.1-flash-lite: Each till starts the day with a float of £150. [cash-handling.md]
+Call   Tokens in   Out  Cached  Seconds
+1            173    18       0    34.79
+2            413    21       0     1.47
+Model 36.26 s, tools 0.10 s, cost $0.000205

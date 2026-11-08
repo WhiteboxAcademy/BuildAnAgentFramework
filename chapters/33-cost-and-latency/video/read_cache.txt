@@ -1,0 +1,5 @@
+$ python3 read_results.py cache
+The 40 tools from chapter 30, 6,569 tokens, sent five times
+Model                   From cache, each try          
+gemini-3.1-flash-lite   0  0  3,977  3,977  3,977
+gemini-3.6-flash        0  0  0  0  0

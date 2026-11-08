@@ -1,0 +1,6 @@
+$ python3 read_results.py tools
+Model                    All 40 tools  Router   Of
+qwen2.5:7b                         12      44   60
+qwen2.5:14b                        12      60   60
+gemini-3.1-flash-lite              20      20   20
+gemini-3.6-flash                   20      20   20

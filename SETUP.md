@@ -36,5 +36,5 @@ python -m venv .venv
 
 You don't need these yet:
 
-- **Docker**, from chapter 31.
+- **Docker**, from chapter 34.
 - **A Gemini API key**, from chapter 32. Copy `.env.example` to `.env` and add it there.

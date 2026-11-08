@@ -1,0 +1,5 @@
+$ python3 read_results.py tools
+Setup                             Right Wrong None Calls Read at most
+one agent, 40 tools                  12    21   27    60        2,050
+one agent, 40 tools, big window      56     0    4    60        6,352
+router, 4 groups                     44     6   10   120        1,835

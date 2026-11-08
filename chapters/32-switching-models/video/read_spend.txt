@@ -1,0 +1,6 @@
+$ python3 read_results.py spend
+Google's paid prices on 2026-11-08, dollars per million tokens
+  gemini-3.1-flash-lite   in 0.25  out 1.50
+  gemini-3.6-flash        in 0.75  out 3.75
+  gemini-3.8-flash        in 0.75  out 3.75
+Everything we sent to Gemini for this chapter: $0.57

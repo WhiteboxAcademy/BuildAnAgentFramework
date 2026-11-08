@@ -1,0 +1,8 @@
+$ python3 raw_reply.py qwen2.5:7b
+qwen2.5:7b through /api/chat:
+  text: ''
+  tool calls: [{'id': 'call_nr8cd7fu', 'function': {'index': 0, 'name': 'search_handbook', 'arguments': {'query': 'till float'}}}]
+qwen2.5:7b as written:
+  <tool_call>
+  {"name": "search_handbook", "arguments": {"query": "till float"}}
+  </tool_call>

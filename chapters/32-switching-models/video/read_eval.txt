@@ -1,0 +1,8 @@
+$ python3 read_results.py eval
+Model                             Passed  Calls  Seconds  Empty  Thai or Chinese  Step limit
+qwen2.5:7b                       113/126    260      400      0                0           0
+qwen2.5:14b                       14/126    160      569      3               77           0
+qwen2.5:14b, extra sentence       33/126    267      665     39               27           0
+qwen2.5:7b, extra sentence       108/126    252      380      0                0           0
+gemini-3.1-flash-lite              41/42    120      244      0                0           1
+gemini-3.6-flash                   36/42    148      401      0                0           5

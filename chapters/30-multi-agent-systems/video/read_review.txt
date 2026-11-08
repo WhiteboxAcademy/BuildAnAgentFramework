@@ -1,0 +1,6 @@
+$ python3 read_results.py review
+Setup            Of 126 Fixed Broke Extra calls
+first               110     -     -         270
+self-check          109     3     4         126
+fresh reviewer      110     5     5         252
+vote of 3           112     7     5         540

@@ -1,0 +1,5 @@
+$ python3 one_question.py ollama/qwen2.5:14b extra
+Model: ollama/qwen2.5:14b
+Question: How much is the till float?
+Answer: The till float amount is £150 [cash-handling.md].
+2 model calls, 781 tokens in, 40 out, 3.9 seconds

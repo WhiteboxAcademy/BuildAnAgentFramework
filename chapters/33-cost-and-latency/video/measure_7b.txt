@@ -1,0 +1,6 @@
+$ python3 measure_one.py ollama/qwen2.5:7b
+ollama/qwen2.5:7b: The initial till float amount is £150. [cash-handling.md]
+Call   Tokens in   Out  Cached  Seconds
+1            249    24       0     0.52
+2            492    18       0     1.04
+Model 1.56 s, tools 0.07 s, cost $0.000000

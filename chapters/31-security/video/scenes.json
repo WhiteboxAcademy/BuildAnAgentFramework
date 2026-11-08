@@ -1,0 +1,407 @@
+{
+ "chapter": "Chapter 31",
+ "scenes": [
+  {
+   "type": "recap",
+   "title": "Previously: Multi-agent systems",
+   "flow": [
+    "An agent as a tool",
+    "Teams vs one agent",
+    "Plain code first",
+    "Choose, then measure"
+   ],
+   "captions": [
+    {
+     "text": "Recap of chapter 30: an agent can be a tool for another agent.",
+     "secs": 7,
+     "focus": 0
+    },
+    {
+     "text": "On small questions, one agent beat every team we built.",
+     "secs": 6,
+     "focus": 1
+    },
+    {
+     "text": "If plain code can do the job, use plain code.",
+     "secs": 6,
+     "focus": 2
+    },
+    {
+     "text": "Choose an architecture with a reason, then measure it against something simpler.",
+     "secs": 8,
+     "focus": 3
+    }
+   ]
+  },
+  {
+   "type": "box",
+   "label": "Security",
+   "inner": [
+    "the attack",
+    "limits in code",
+    "the Rule of Two"
+   ],
+   "captions": [
+    {
+     "text": "Today's black box: security. A model can't reliably tell your instructions from text it reads.",
+     "secs": 9
+    },
+    {
+     "text": "So we won't try to make it unfoolable. We'll make being fooled harmless. Limits go in code.",
+     "secs": 9,
+     "open": true,
+     "shot": "01-box"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/attack.txt",
+   "captions": [
+    {
+     "text": "A pretend office. Everything is fake, and send_email sends nothing. The task: summarise the inbox.",
+     "secs": 9,
+     "lines": 6
+    },
+    {
+     "text": "One message has planted text, asking for a private file to be emailed out. Predict: will it?",
+     "secs": 9,
+     "lines": 6
+    },
+    {
+     "text": "It read the file outside its workspace, and emailed the payroll code out.",
+     "secs": 8,
+     "lines": 8
+    },
+    {
+     "text": "Then it wrote the summary it was asked for. In our runs, this wording leaked 8 times in 10.",
+     "secs": 9,
+     "lines": 14,
+     "shot": "02-attack"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_quiet.txt",
+   "captions": [
+    {
+     "text": "Here the answer gave it away. Don't count on that. This saved run leaked too.",
+     "secs": 8,
+     "lines": 9
+    },
+    {
+     "text": "The summary is complete and correct. Only the record of tool calls shows the email.",
+     "secs": 8,
+     "lines": 15,
+     "shot": "03-quiet"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_attacks.txt",
+   "captions": [
+    {
+     "text": "Every wording we tried, ten runs each, including the ones that failed.",
+     "secs": 7,
+     "lines": 9
+    },
+    {
+     "text": "The plainest wordings did best. The one that spelled out each tool call leaked nothing.",
+     "secs": 9,
+     "lines": 9,
+     "shot": "04-wordings"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_defences.txt",
+   "captions": [
+    {
+     "text": "First defence: ask nicely. A warning in the prompt, or tags around file text. Predict: does either help?",
+     "secs": 10,
+     "lines": 6
+    },
+    {
+     "text": "No. 18 leaks of 40 with nothing, 21 with the warning, 20 with tags. The attack lives in the prompt too.",
+     "secs": 10,
+     "lines": 6
+    },
+    {
+     "text": "Tags stopped one wording, and two others then worked every time. The weakness moved.",
+     "secs": 9,
+     "lines": 6,
+     "shot": "05-prompt"
+    },
+    {
+     "text": "A phrase filter scored zero. But we wrote its list after seeing these four attacks.",
+     "secs": 8,
+     "lines": 7
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_targeted.txt",
+   "captions": [
+    {
+     "text": "So we wrote an attack aimed at the filter, with none of its phrases. It passed through untouched.",
+     "secs": 9,
+     "lines": 7,
+     "shot": "06-filter"
+    },
+    {
+     "text": "The attacker moves second. Every defence from here on was tested again, with an attack aimed at it.",
+     "secs": 9,
+     "lines": 7
+    }
+   ]
+  },
+  {
+   "type": "code",
+   "file": "code/whitebox/safety.py",
+   "start": "def inside",
+   "end": "return full",
+   "captions": [
+    {
+     "text": "Now limits that don't ask the model. Chapter 14's read_file reads any path it's given.",
+     "secs": 8,
+     "focus": null
+    },
+    {
+     "text": "resolve() works out where a path really leads, following every .. and every link.",
+     "secs": 8,
+     "focus": [
+      "full = ",
+      "full = "
+     ]
+    },
+    {
+     "text": "If the result isn't inside the folder, refuse.",
+     "secs": 6,
+     "focus": [
+      "if not full",
+      "raise ValueError"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/escape.txt",
+   "captions": [
+    {
+     "text": "Four paths, and no model. The fourth is a link in the inbox that points at the payroll file.",
+     "secs": 9,
+     "lines": 7
+    },
+    {
+     "text": "Chapter 14's version reads the code three ways. folder_tools refuses all three.",
+     "secs": 8,
+     "lines": 12,
+     "shot": "07-escape"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/attack_folder.txt",
+   "captions": [
+    {
+     "text": "The same attack, with folder_tools. The model was still fooled. It tried to read the file.",
+     "secs": 9,
+     "lines": 7
+    },
+    {
+     "text": "The limit held. Then it emailed the inbox summary out anyway. This limit protects files, nothing else.",
+     "secs": 10,
+     "lines": 17,
+     "shot": "08-folder"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/addresses.txt",
+   "captions": [
+    {
+     "text": "Next, a limit on where email goes. Our first check: does the address end with @quillon.example?",
+     "secs": 9,
+     "lines": 3
+    },
+    {
+     "text": "Two addresses in one field pass it. That attack got 3 leaks in 10. A strict check got none.",
+     "secs": 9,
+     "lines": 6,
+     "shot": "09-addresses"
+    }
+   ]
+  },
+  {
+   "type": "code",
+   "file": "code/whitebox/safety.py",
+   "start": "class Lockdown",
+   "end": "self.locked = True",
+   "captions": [
+    {
+     "text": "Or a lock. After the agent reads untrusted text, the tools that act are blocked.",
+     "secs": 8,
+     "focus": [
+      "def after_tool",
+      "self.locked = True"
+     ]
+    },
+    {
+     "text": "Pass ask, and a person decides instead. It's chapter 16's Approval, with a memory.",
+     "secs": 8,
+     "focus": [
+      "if self.ask",
+      "return None"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_link.txt",
+   "captions": [
+    {
+     "text": "The email was stopped. But the model still read the code, and the answer is a way out too.",
+     "secs": 9,
+     "lines": 8
+    },
+    {
+     "text": "This attack asked for a link holding the code. If anyone opens it, the attacker gets the code.",
+     "secs": 9,
+     "lines": 13,
+     "shot": "10-link"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_targeted.txt",
+   "captions": [
+    {
+     "text": "The link beat the email check, no send tool and the lock.",
+     "secs": 7,
+     "lines": 13
+    },
+    {
+     "text": "A relay even carried the request across a split between two agents. Free text carries instructions.",
+     "secs": 10,
+     "lines": 16
+    },
+    {
+     "text": "Only folder and layered never let the model read the code. Only layered sent nothing out.",
+     "secs": 8,
+     "lines": 19,
+     "shot": "11-targeted"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_cost.txt",
+   "captions": [
+    {
+     "text": "What did the limits cost? The lock made a real email job impossible: 0 of 10.",
+     "secs": 8,
+     "lines": 6
+    },
+    {
+     "text": "The folder limit cost nothing we could measure. Careful approval worked, with 20 questions to answer.",
+     "secs": 10,
+     "lines": 15,
+     "shot": "12-cost"
+    }
+   ]
+  },
+  {
+   "type": "recap",
+   "title": "The Rule of Two",
+   "flow": [
+    "Untrusted input",
+    "Private data",
+    "A way out",
+    "At most two"
+   ],
+   "captions": [
+    {
+     "text": "Meta's Rule of Two. Does it read untrusted input? Here, the inbox.",
+     "secs": 7,
+     "focus": 0
+    },
+    {
+     "text": "Can it reach private data? Here, the payroll file. The folder limit removed this one.",
+     "secs": 8,
+     "focus": 1
+    },
+    {
+     "text": "Can it act or send outside? Email, and any link in the answer.",
+     "secs": 7,
+     "focus": 2
+    },
+    {
+     "text": "Give an agent at most two. If a job needs all three, a person approves, or you split it.",
+     "secs": 9,
+     "focus": 3,
+     "shot": "13-rule"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/fingerprints.txt",
+   "captions": [
+    {
+     "text": "One more: a tool can change after you approved it. A fingerprint shows when it's time to read it again.",
+     "secs": 10,
+     "lines": 4,
+     "shot": "14-fingerprints"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/exercise_output.txt",
+   "final": "9 passed",
+   "captions": [
+    {
+     "text": "Five exercises: the folder check, the strict address, outside links, the lock and the Rule of Two.",
+     "secs": 9,
+     "lines": 11
+    },
+    {
+     "text": "You've finished when you see 9 passed.",
+     "secs": 6,
+     "lines": 11,
+     "shot": "15-exercises"
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "title": "You opened security.",
+   "points": [
+    "A prompt can't protect you",
+    "The attacker moves second",
+    "Each limit closes one door",
+    "Remove access first"
+   ],
+   "next": "Next: chapter 32, switching models",
+   "captions": [
+    {
+     "text": "Assume the model will be fooled. Build so that it doesn't matter.",
+     "secs": 7
+    },
+    {
+     "text": "Those counts come from one 7B model and attacks we wrote. Test yours.",
+     "secs": 7
+    }
+   ]
+  }
+ ]
+}

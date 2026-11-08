@@ -21,7 +21,7 @@ Stuck? Start with [docs/troubleshooting.md](docs/troubleshooting.md).
 
 This course runs `qwen2.5:7b` on your own computer, so anyone can take it without paying for an API.
 A bigger model may give better results. The concepts, the code and the framework you build stay the
-same, and you can switch models whenever you like. Chapter 32 switches to Gemini.
+same, and you can switch models whenever you like. Chapter 32 switches models, first to a bigger one on your computer, then to Gemini in the cloud.
 
 The numbers won't stay the same. Every score in the course comes from real runs of this one model, so
 a stronger model may score higher, and some failures we show may shrink or disappear. That's why you

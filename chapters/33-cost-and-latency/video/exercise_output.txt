@@ -1,0 +1,7 @@
+$ python3 -m pytest test_exercises.py
+FAILED test_exercises.py::test_todo_1_shares - AssertionError: assert None ==...
+FAILED test_exercises.py::test_todo_2_cost_per_right - assert None == 0.000484
+FAILED test_exercises.py::test_todo_3_cached_cost - assert None == 0.001222
+FAILED test_exercises.py::test_todo_4_model_timer - assert [] == [2.5, 1.0]
+FAILED test_exercises.py::test_todo_5_run_all - AssertionError: assert None =...
+============================== 5 failed in 0.05s ===============================

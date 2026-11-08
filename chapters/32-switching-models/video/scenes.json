@@ -1,0 +1,378 @@
+{
+ "chapter": "Chapter 32",
+ "scenes": [
+  {
+   "type": "recap",
+   "title": "Previously: Security",
+   "flow": [
+    "The attack works",
+    "Prompts can't protect",
+    "Limits in code",
+    "The Rule of Two"
+   ],
+   "captions": [
+    {
+     "text": "Recap of chapter 31: planted text sent a payroll code out in 18 runs of 40.",
+     "secs": 7,
+     "focus": 0
+    },
+    {
+     "text": "A warning in the prompt didn't help. The attack lives in the prompt too.",
+     "secs": 7,
+     "focus": 1
+    },
+    {
+     "text": "Limits in code held, however the model was talked into it.",
+     "secs": 6,
+     "focus": 2
+    },
+    {
+     "text": "And the Rule of Two: give an agent at most two of three risky abilities.",
+     "secs": 7,
+     "focus": 3
+    }
+   ]
+  },
+  {
+   "type": "box",
+   "label": "Switching models",
+   "inner": [
+    "a bigger local model",
+    "a cloud model",
+    "a spending limit"
+   ],
+   "captions": [
+    {
+     "text": "Today's black box: switching models. Chapter 13 made it one line. Today we use that line.",
+     "secs": 9
+    },
+    {
+     "text": "Switching takes one line. Knowing it worked takes the eval.",
+     "secs": 7,
+     "open": true,
+     "shot": "01-box"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/one_7b.txt",
+   "captions": [
+    {
+     "text": "One question through chapter 30's agent, on the 7B model you've used all course. It's right.",
+     "secs": 9,
+     "lines": 5
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/one_14b.txt",
+   "captions": [
+    {
+     "text": "Now one line changes: a model twice the size. Predict: better, or worse?",
+     "secs": 8,
+     "lines": 2
+    },
+    {
+     "text": "It wrote 84 tokens, and the agent got nothing back. Three empty replies, then an error.",
+     "secs": 9,
+     "lines": 5,
+     "shot": "02-empty"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_eval.txt",
+   "captions": [
+    {
+     "text": "The full eval: 42 questions, three times each. 113 out of 126 became 14. Nothing crashed.",
+     "secs": 9,
+     "lines": 4,
+     "shot": "03-eval"
+    },
+    {
+     "text": "77 answers came back partly in Thai or Chinese, to an English question.",
+     "secs": 8,
+     "lines": 4
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/raw_7b.txt",
+   "captions": [
+    {
+     "text": "What did each model really write? The 7B model writes one tool call, and stops.",
+     "secs": 8,
+     "lines": 8
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/raw_14b.txt",
+   "captions": [
+    {
+     "text": "The 14B model writes the same call, then keeps going, and answers from a search it imagined.",
+     "secs": 9,
+     "lines": 9
+    },
+    {
+     "text": "$50 from cash_management.md. Neither exists. And Ollama can't parse it, so it returns nothing.",
+     "secs": 10,
+     "lines": 9,
+     "shot": "04-raw"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/one_14b_extra.txt",
+   "captions": [
+    {
+     "text": "One sentence in the prompt: write only the tool call, then stop. On this question, it works.",
+     "secs": 9,
+     "lines": 5,
+     "shot": "05-extra"
+    },
+    {
+     "text": "On the eval it reached 33 of 126. A fix for one model has to be tested again on the next.",
+     "secs": 9,
+     "lines": 5
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/wrong_key.txt",
+   "captions": [
+    {
+     "text": "So, a cloud model. It needs a key, kept in .env, which git ignores. Never in code, never on screen.",
+     "secs": 10,
+     "lines": 1
+    },
+    {
+     "text": "This key is fake. Google's real reply: not valid. A 400 won't fix itself, so don't retry.",
+     "secs": 9,
+     "lines": 3,
+     "shot": "06-key"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/what_gemini_sees.txt",
+   "captions": [
+    {
+     "text": "GeminiModel translates our messages by hand. The system prompt goes apart, and roles are user and model.",
+     "secs": 10,
+     "lines": 5
+    },
+    {
+     "text": "A tool result goes back as a user turn, matched to its call by id.",
+     "secs": 7,
+     "lines": 8,
+     "shot": "07-request"
+    }
+   ]
+  },
+  {
+   "type": "code",
+   "file": "code/whitebox/messages.py",
+   "start": "class Message",
+   "end": "raw: dict",
+   "captions": [
+    {
+     "text": "Gemini also sends a thought signature, which must go back exactly as received.",
+     "secs": 8,
+     "focus": null
+    },
+    {
+     "text": "So Message gets one field only the provider reads. The framework carries it without opening it.",
+     "secs": 9,
+     "focus": [
+      "raw: dict",
+      "raw: dict"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "code",
+   "file": "code/whitebox/models.py",
+   "start": "    def config",
+   "end": "        return config",
+   "captions": [
+    {
+     "text": "Options don't travel. num_ctx exists only in Ollama, and newer Gemini models ignore temperature.",
+     "secs": 9,
+     "focus": null
+    },
+    {
+     "text": "So GeminiModel refuses any option it doesn't know, instead of dropping it quietly.",
+     "secs": 8,
+     "focus": [
+      "unknown = ",
+      "raise ValueError"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "code",
+   "file": "code/whitebox/reliability.py",
+   "start": "    def cost(self, reply):",
+   "end": "        return reply",
+   "captions": [
+    {
+     "text": "A cloud model charges per token. SpendLimit refuses the next call once the limit is reached.",
+     "secs": 9,
+     "focus": [
+      "if self.spent >= self.dollars",
+      "raise ModelError"
+     ]
+    },
+    {
+     "text": "It adds up each reply's cost, thinking included. All our cloud runs together cost $0.57.",
+     "secs": 9,
+     "focus": [
+      "def cost",
+      "return (reply.tokens_in"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/one_lite.txt",
+   "captions": [
+    {
+     "text": "The switch: the same agent, tool and index. Only the model string changed. Right, for $0.0002.",
+     "secs": 9,
+     "lines": 5,
+     "shot": "08-cloud"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_eval.txt",
+   "captions": [
+    {
+     "text": "On one pass of the eval, Flash-Lite got 41 of 42, for about two cents.",
+     "secs": 7,
+     "lines": 8
+    },
+    {
+     "text": "3.6 Flash got 36. It kept searching until our step limit stopped it, a limit chosen for 7B.",
+     "secs": 9,
+     "lines": 8,
+     "shot": "09-cloud-eval"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_tools.txt",
+   "captions": [
+    {
+     "text": "Chapter 30's 40 long tools: both local models choke on Ollama's window. Both cloud models got every one.",
+     "secs": 10,
+     "lines": 6,
+     "shot": "10-tools"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/latency.txt",
+   "captions": [
+    {
+     "text": "One tiny reply, three times on each model. The cloud models took about 2 seconds.",
+     "secs": 8,
+     "lines": 4
+    },
+    {
+     "text": "The newest Flash model took over two minutes to say ok. Speed changes, so you measure it.",
+     "secs": 9,
+     "lines": 6,
+     "shot": "11-latency"
+    }
+   ]
+  },
+  {
+   "type": "recap",
+   "title": "What switching changed",
+   "flow": [
+    "The format grew",
+    "Options don't travel",
+    "Behaviour doesn't travel",
+    "New code for the cloud"
+   ],
+   "captions": [
+    {
+     "text": "The agent, tools and eval ran unchanged on four models. But the message format had to grow.",
+     "secs": 9,
+     "focus": 0
+    },
+    {
+     "text": "Options didn't travel. An option one provider ignores is a bug you can't see.",
+     "secs": 8,
+     "focus": 1
+    },
+    {
+     "text": "Behaviour didn't travel: one model wrote past its call, one hit the step limit, one was too slow.",
+     "secs": 10,
+     "focus": 2
+    },
+    {
+     "text": "And the cloud brought a key, a spending limit and new errors.",
+     "secs": 7,
+     "focus": 3,
+     "shot": "12-changed"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/exercise_output.txt",
+   "final": "5 passed",
+   "captions": [
+    {
+     "text": "Five exercises: a Gemini part, a reply's cost, options, a .env line and a budget. No key needed.",
+     "secs": 9,
+     "lines": 7
+    },
+    {
+     "text": "You've finished when you see 5 passed.",
+     "secs": 6,
+     "lines": 7,
+     "shot": "13-exercises"
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "title": "You opened switching models.",
+   "points": [
+    "One line to switch",
+    "The eval says if it worked",
+    "Keys stay out of code",
+    "A limit before the first call"
+   ],
+   "next": "Next: chapter 33, cost and latency",
+   "captions": [
+    {
+     "text": "Switching takes one line. Knowing it worked takes the eval.",
+     "secs": 6
+    },
+    {
+     "text": "These counts come from one Mac and one day. Measure your own.",
+     "secs": 6
+    }
+   ]
+  }
+ ]
+}

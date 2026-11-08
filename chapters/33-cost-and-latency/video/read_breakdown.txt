@@ -1,0 +1,9 @@
+$ python3 read_results.py breakdown
+Share of everything sent, one pass of 42 questions
+                            system      tools   question    results  own turns
+qwen2.5:7b                     29%        20%         4%        43%         4%
+gemini-3.1-flash-lite          17%        12%         2%        65%         3%
+system = system prompt, tools = tool descriptions, results = tool results,
+own turns = the model's earlier turns
+qwen2.5:7b: model 117 s, tools 3 s, of 120 s
+gemini-3.1-flash-lite: model 210 s, tools 8 s, of 218 s

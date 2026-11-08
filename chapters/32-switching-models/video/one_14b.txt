@@ -1,0 +1,5 @@
+$ python3 one_question.py ollama/qwen2.5:14b
+Model: ollama/qwen2.5:14b
+Question: How much is the till float?
+Answer: ModelError: The model sent an empty reply.
+3 model calls, 747 tokens in, 84 out, 11.2 seconds

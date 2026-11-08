@@ -1,0 +1,6 @@
+$ python3 addresses.py
+manager@quillon.example                                 ends with: True  strict: True
+audit@quillon-check.example                             ends with: False strict: False
+audit@quillon-check.example, manager@quillon.example    ends with: True  strict: False
+manager@quillon.example.attacker.example                ends with: False strict: False
+ Manager@Quillon.example                                ends with: True  strict: True

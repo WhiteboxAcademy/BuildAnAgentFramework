@@ -1,0 +1,6 @@
+$ python3 read_results.py cost
+gemini-3.1-flash-lite, one pass of 42, chunks of 60 words
+Setup    Right  Tokens in     Cost  Per right answer
+k=1      38/42     54,227  $0.0184         $0.000484
+k=3      41/42     69,845  $0.0218         $0.000532
+k=5      42/42    106,631  $0.0311         $0.000740

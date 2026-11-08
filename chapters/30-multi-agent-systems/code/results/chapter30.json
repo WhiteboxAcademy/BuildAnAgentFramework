@@ -1,0 +1,448 @@
+{
+ "teams": [
+  {
+   "setup": "one agent",
+   "passed": 113,
+   "calls": 260,
+   "tokens_in": 111692,
+   "seconds": 400
+  },
+  {
+   "setup": "two tools",
+   "passed": 88,
+   "calls": 287,
+   "tokens_in": 163105,
+   "seconds": 555
+  },
+  {
+   "setup": "router",
+   "passed": 96,
+   "calls": 384,
+   "tokens_in": 116254,
+   "seconds": 425
+  },
+  {
+   "setup": "router, new wording",
+   "passed": 94,
+   "calls": 392,
+   "tokens_in": 135943,
+   "seconds": 422
+  },
+  {
+   "setup": "manager",
+   "passed": 92,
+   "calls": 499,
+   "tokens_in": 191316,
+   "seconds": 692
+  },
+  {
+   "setup": "strict manager",
+   "passed": 102,
+   "calls": 595,
+   "tokens_in": 248246,
+   "seconds": 865
+  },
+  {
+   "setup": "perfect router",
+   "passed": 113,
+   "calls": 252,
+   "tokens_in": 100658,
+   "seconds": 396
+  }
+ ],
+ "tools": [
+  {
+   "setup": "one agent, 40 tools",
+   "right": 12,
+   "wrong": 21,
+   "none": 27,
+   "misrouted": 0,
+   "tries": 60,
+   "calls": 60,
+   "read_max": 2050,
+   "seconds": 102
+  },
+  {
+   "setup": "one agent, 40 tools, big window",
+   "right": 56,
+   "wrong": 0,
+   "none": 4,
+   "misrouted": 0,
+   "tries": 60,
+   "calls": 60,
+   "read_max": 6352,
+   "seconds": 73
+  },
+  {
+   "setup": "router, 4 groups",
+   "right": 44,
+   "wrong": 6,
+   "none": 10,
+   "misrouted": 3,
+   "tries": 60,
+   "calls": 120,
+   "read_max": 1835,
+   "seconds": 87
+  }
+ ],
+ "batch": [
+  {
+   "size": 1,
+   "window": "default",
+   "passed": 93,
+   "answered": 108,
+   "asked": 108,
+   "stopped": 1,
+   "calls": 221,
+   "tokens_in": 91697,
+   "tokens_out": 8562,
+   "seconds": 342
+  },
+  {
+   "size": 5,
+   "window": "default",
+   "passed": 57,
+   "answered": 79,
+   "asked": 108,
+   "stopped": 1,
+   "calls": 68,
+   "tokens_in": 60403,
+   "tokens_out": 5523,
+   "seconds": 230
+  },
+  {
+   "size": 10,
+   "window": "default",
+   "passed": 84,
+   "answered": 103,
+   "asked": 108,
+   "stopped": 0,
+   "calls": 27,
+   "tokens_in": 39234,
+   "tokens_out": 6065,
+   "seconds": 283
+  },
+  {
+   "size": 20,
+   "window": "default",
+   "passed": 0,
+   "answered": 0,
+   "asked": 108,
+   "stopped": 0,
+   "calls": 13,
+   "tokens_in": 25121,
+   "tokens_out": 2761,
+   "seconds": 153
+  },
+  {
+   "size": 36,
+   "window": "default",
+   "passed": 0,
+   "answered": 0,
+   "asked": 108,
+   "stopped": 0,
+   "calls": 6,
+   "tokens_in": 14222,
+   "tokens_out": 2924,
+   "seconds": 125
+  },
+  {
+   "size": 36,
+   "window": 16384,
+   "passed": 83,
+   "answered": 101,
+   "asked": 108,
+   "stopped": 0,
+   "calls": 7,
+   "tokens_in": 36912,
+   "tokens_out": 6756,
+   "seconds": 333
+  }
+ ],
+ "batch_five_again": {
+  "size": 5,
+  "passed": 56,
+  "answered": 80,
+  "asked": 108
+ },
+ "relay": [
+  {
+   "setup": "one agent",
+   "passes": [
+    11,
+    11,
+    11,
+    10,
+    10
+   ],
+   "calls": [
+    61,
+    62,
+    61,
+    60,
+    62
+   ]
+  },
+  {
+   "setup": "relay of two agents",
+   "passes": [
+    17,
+    20,
+    18,
+    18,
+    20
+   ],
+   "calls": [
+    117,
+    119,
+    118,
+    117,
+    117
+   ]
+  },
+  {
+   "setup": "one agent, two steps",
+   "passes": [
+    17,
+    15,
+    16,
+    14,
+    13
+   ],
+   "calls": [
+    98,
+    99,
+    100,
+    97,
+    99
+   ]
+  }
+ ],
+ "review": {
+  "first": {
+   "passed": 110,
+   "fixed": 0,
+   "broke": 16,
+   "calls": 270,
+   "tokens_in": 125856,
+   "seconds": 441
+  },
+  "self-check": {
+   "passed": 109,
+   "fixed": 3,
+   "broke": 4,
+   "calls": 126,
+   "tokens_in": 86649,
+   "seconds": 182
+  },
+  "fresh reviewer": {
+   "passed": 110,
+   "fixed": 5,
+   "broke": 5,
+   "calls": 252,
+   "tokens_in": 128890,
+   "seconds": 437
+  },
+  "vote of 3": {
+   "passed": 112,
+   "fixed": 7,
+   "broke": 5,
+   "calls": 540,
+   "tokens_in": 249143,
+   "seconds": 870
+  }
+ },
+ "logs": [
+  {
+   "measure": "late",
+   "setup": "one agent, search",
+   "errors": [
+    0.976,
+    0.976,
+    0.983
+   ],
+   "worst_branch_right": 0,
+   "tries": 3
+  },
+  {
+   "measure": "late",
+   "setup": "one call, everything",
+   "errors": [
+    0.743,
+    0.722,
+    0.722
+   ],
+   "worst_branch_right": 0,
+   "tries": 3
+  },
+  {
+   "measure": "late",
+   "setup": "team of 48, workers count",
+   "errors": [
+    0.367,
+    0.396,
+    0.38
+   ],
+   "worst_branch_right": 1,
+   "tries": 3
+  },
+  {
+   "measure": "late",
+   "setup": "team of 48, code counts",
+   "errors": [
+    0.032,
+    0.161,
+    0.115
+   ],
+   "worst_branch_right": 1,
+   "tries": 3
+  },
+  {
+   "measure": "late",
+   "setup": "team of 4, code counts",
+   "errors": [
+    0.778
+   ],
+   "worst_branch_right": 0,
+   "tries": 1
+  },
+  {
+   "measure": "late",
+   "setup": "text search, obvious word",
+   "errors": [
+    0.962
+   ],
+   "worst_branch_right": 1,
+   "tries": 1
+  },
+  {
+   "measure": "ran-out",
+   "setup": "one agent, search",
+   "errors": [
+    24.932,
+    22.756,
+    11.75
+   ],
+   "worst_branch_right": 3,
+   "tries": 3
+  },
+  {
+   "measure": "ran-out",
+   "setup": "one call, everything",
+   "errors": [
+    0.709,
+    0.715,
+    0.709
+   ],
+   "worst_branch_right": 1,
+   "tries": 3
+  },
+  {
+   "measure": "ran-out",
+   "setup": "team of 48, workers count",
+   "errors": [
+    0.225,
+    0.211,
+    0.238
+   ],
+   "worst_branch_right": 1,
+   "tries": 3
+  },
+  {
+   "measure": "ran-out",
+   "setup": "team of 48, code counts",
+   "errors": [
+    0.281,
+    0.268,
+    0.268
+   ],
+   "worst_branch_right": 0,
+   "tries": 3
+  },
+  {
+   "measure": "ran-out",
+   "setup": "team of 4, code counts",
+   "errors": [
+    1.585
+   ],
+   "worst_branch_right": 0,
+   "tries": 1
+  },
+  {
+   "measure": "ran-out",
+   "setup": "text search, obvious word",
+   "errors": [
+    0.0
+   ],
+   "worst_branch_right": 1,
+   "tries": 1
+  },
+  {
+   "measure": "baked",
+   "setup": "one agent, search",
+   "errors": [
+    1.0,
+    51.941,
+    1.0
+   ],
+   "worst_branch_right": 0,
+   "tries": 3
+  },
+  {
+   "measure": "baked",
+   "setup": "one call, everything",
+   "errors": [
+    0.598,
+    0.598,
+    0.598
+   ],
+   "worst_branch_right": 0,
+   "tries": 3
+  },
+  {
+   "measure": "baked",
+   "setup": "team of 48, workers count",
+   "errors": [
+    0.392,
+    0.453,
+    0.46
+   ],
+   "worst_branch_right": 0,
+   "tries": 3
+  },
+  {
+   "measure": "baked",
+   "setup": "team of 48, code counts",
+   "errors": [
+    0.426,
+    0.417,
+    0.376
+   ],
+   "worst_branch_right": 0,
+   "tries": 3
+  },
+  {
+   "measure": "baked",
+   "setup": "team of 4, code counts",
+   "errors": [
+    0.64
+   ],
+   "worst_branch_right": 0,
+   "tries": 1
+  },
+  {
+   "measure": "baked",
+   "setup": "text search, obvious word",
+   "errors": [
+    0.379
+   ],
+   "worst_branch_right": 1,
+   "tries": 1
+  }
+ ],
+ "runaway": {
+  "question": "How much did the Riverside roof repair cost in 2025?",
+  "tokens_out": 1054,
+  "answer": "I couldn't find any specific information about a roof repair cost for Riverside in 2025. The logs do not mention any roof repairs or their associated costs. [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md]"
+ }
+}

@@ -1,0 +1,6 @@
+$ python3 where_tokens_go.py ollama/qwen2.5:7b
+Call       system prompt tool descriptions          question      tool results model's own turns
+1                    398               282                47                 0                 0
+2                    398               282                47             1,145                45
+Share                30%               21%                4%               43%                2%
+Characters, not tokens. A token is about four characters of English.

@@ -1,0 +1,4 @@
+$ python3 fingerprints.py
+When you approved it: d3b0b131f3923910
+Today:                5b65df310181cbfc
+Changed. Don't use these tools until a person has read them again.

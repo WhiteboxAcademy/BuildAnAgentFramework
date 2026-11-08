@@ -1,0 +1,8 @@
+$ python3 read_results.py stream
+Model                    First words  Whole reply
+qwen2.5:7b                     1.00s        1.80s
+qwen2.5:7b                     0.03s        0.86s
+qwen2.5:7b                     0.03s        1.06s
+gemini-3.1-flash-lite          5.77s        5.77s
+gemini-3.1-flash-lite          1.68s        1.68s
+gemini-3.1-flash-lite         17.47s       17.47s

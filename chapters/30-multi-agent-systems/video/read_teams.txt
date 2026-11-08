@@ -1,0 +1,9 @@
+$ python3 read_results.py teams
+Setup                  Of 126  Calls  Tokens in  Seconds
+one agent                 113    260    111,692      400
+two tools                  88    287    163,105      555
+router                     96    384    116,254      425
+router, new wording        94    392    135,943      422
+manager                    92    499    191,316      692
+strict manager            102    595    248,246      865
+perfect router            113    252    100,658      396

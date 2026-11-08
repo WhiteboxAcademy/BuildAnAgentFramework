@@ -1,0 +1,432 @@
+{
+ "chapter": "Chapter 30",
+ "scenes": [
+  {
+   "type": "recap",
+   "title": "Previously: MCP client",
+   "flow": [
+    "Connect",
+    "A server's tool is a Tool",
+    "Both generations",
+    "Someone else's words"
+   ],
+   "captions": [
+    {
+     "text": "Recap of chapter 29: McpClient let your agent use tools it doesn't own.",
+     "secs": 7,
+     "focus": 0
+    },
+    {
+     "text": "as_tool turned a server's tool into a normal Tool. Agent didn't change.",
+     "secs": 7,
+     "focus": 1
+    },
+    {
+     "text": "The same client reached new and older servers.",
+     "secs": 6,
+     "focus": 2
+    },
+    {
+     "text": "And a tool's text is someone else's words, going into your prompt.",
+     "secs": 7,
+     "focus": 3
+    }
+   ]
+  },
+  {
+   "type": "box",
+   "label": "A team of agents",
+   "inner": [
+    "agent_tool",
+    "Router",
+    "when to use neither"
+   ],
+   "captions": [
+    {
+     "text": "Today's black box: a team of agents. The next step, people say. Is it?",
+     "secs": 7
+    },
+    {
+     "text": "Let's open it, and measure it. The number to beat: one agent, 113 of 126.",
+     "secs": 7,
+     "open": true,
+     "shot": "01-box"
+    }
+   ]
+  },
+  {
+   "type": "code",
+   "file": "code/whitebox/team.py",
+   "start": "def agent_tool",
+   "end": "return Tool(name",
+   "captions": [
+    {
+     "text": "One new idea. A Tool is just a name, a description and a function.",
+     "secs": 7,
+     "focus": null
+    },
+    {
+     "text": "So the function can run a whole agent, and return its answer as text.",
+     "secs": 7,
+     "focus": [
+      "def ask",
+      "return agent.run"
+     ]
+    },
+    {
+     "text": "The worker starts with an empty chat. It knows only what the task says.",
+     "secs": 7,
+     "focus": [
+      "def ask",
+      "def ask"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "demo",
+   "file": "code/first_team.py",
+   "start": "manager = Setups",
+   "end": "print(\"Manager said",
+   "output": "video/first_team.txt",
+   "captions": [
+    {
+     "text": "A manager with two workers, each a whole agent with its own search. Predict: how many model calls?",
+     "secs": 9,
+     "lines": 0,
+     "focus": null
+    },
+    {
+     "text": "It worked, and the task passed on word for word. Four model calls, where one agent takes two.",
+     "secs": 9,
+     "lines": 5,
+     "focus": null,
+     "shot": "02-first-team"
+    }
+   ]
+  },
+  {
+   "type": "code",
+   "file": "code/whitebox/team.py",
+   "start": "class Router",
+   "end": "return self.workers[name][1]",
+   "captions": [
+    {
+     "text": "A router is cheaper. One model call picks a worker, and that worker does the whole job.",
+     "secs": 8,
+     "focus": [
+      "def pick",
+      "return next"
+     ]
+    },
+    {
+     "text": "temperature=0, because this is a decision, not writing.",
+     "secs": 6,
+     "focus": [
+      "said = self.model",
+      "said = self.model"
+     ]
+    },
+    {
+     "text": "If the reply is unclear, the first worker gets it.",
+     "secs": 6,
+     "focus": [
+      "return next",
+      "return next"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "demo",
+   "file": "code/first_router.py",
+   "start": "router = Setups",
+   "end": "print(f\"          ",
+   "output": "video/first_router.txt",
+   "captions": [
+    {
+     "text": "Four questions: two for the handbook and two for the records. Predict: how many arrive at the right worker?",
+     "secs": 9,
+     "lines": 0,
+     "focus": null
+    },
+    {
+     "text": "One of four. Each worker honestly said it didn't know, because it couldn't see the answer. No crash.",
+     "secs": 10,
+     "lines": 9,
+     "focus": null,
+     "shot": "03-router"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_teams.txt",
+   "captions": [
+    {
+     "text": "So does a team beat one agent? The same eval, three runs of 42 questions, on every setup.",
+     "secs": 8,
+     "lines": 2
+    },
+    {
+     "text": "Every real team did worse, and cost more. Splitting created a decision the model can get wrong.",
+     "secs": 9,
+     "lines": 7
+    },
+    {
+     "text": "The strict manager reached 102, with more than twice the calls.",
+     "secs": 7,
+     "lines": 7
+    },
+    {
+     "text": "The perfect router was told the right worker every time. It only tied, at 113.",
+     "secs": 9,
+     "lines": 9,
+     "shot": "04-teams"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_runaway.txt",
+   "captions": [
+    {
+     "text": "One run froze for 13 minutes. We believe this is the same fault, caught later: a reply that repeats itself.",
+     "secs": 10,
+     "lines": 5
+    },
+    {
+     "text": "A timeout limits silence, and a runaway is never silent. So OllamaModel now limits length: num_predict.",
+     "secs": 10,
+     "lines": 5,
+     "shot": "05-runaway"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_relay.txt",
+   "captions": [
+    {
+     "text": "Research says teams win when work is big and splits cleanly, and warns that wins may just be extra compute.",
+     "secs": 10,
+     "lines": 2
+    },
+    {
+     "text": "Hop questions need two facts. Two steps took one agent from 53 to 75, of 150. So extra work is part of it.",
+     "secs": 10,
+     "lines": 5
+    },
+    {
+     "text": "A relay reached 93. Its second agent is the same model. The difference is mainly a clean chat.",
+     "secs": 9,
+     "lines": 5
+    },
+    {
+     "text": "After one pass they tied at 17, and we wrote that the agent added nothing. Five passes said otherwise.",
+     "secs": 10,
+     "lines": 5,
+     "shot": "06-relay"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_review.txt",
+   "captions": [
+    {
+     "text": "A second opinion? A fresh reviewer, with its own search, told not to trust the draft. Predict.",
+     "secs": 9,
+     "lines": 2
+    },
+    {
+     "text": "It fixed 5 and broke 5. On one model, checking mostly moved the errors around.",
+     "secs": 9,
+     "lines": 6,
+     "shot": "07-review"
+    }
+   ]
+  },
+  {
+   "type": "demo",
+   "file": "code/too_much_at_once.py",
+   "start": "for size in (10, 20)",
+   "end": "result = agent.run",
+   "output": "video/too_much_at_once.txt",
+   "captions": [
+    {
+     "text": "Now a pile of independent questions: all in one chat, or one chat each? Predict: which breaks first?",
+     "secs": 9,
+     "lines": 0,
+     "focus": null
+    },
+    {
+     "text": "Twenty in one chat got none right. The search results overflowed the window, with no error.",
+     "secs": 9,
+     "lines": 7,
+     "focus": null,
+     "shot": "08-batch"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_batch.txt",
+   "captions": [
+    {
+     "text": "Over 108 questions, one chat each got 93. So here, a split wins.",
+     "secs": 7,
+     "lines": 3
+    },
+    {
+     "text": "But a bigger window got 83 in 7 calls, not 221. A team has to beat that too.",
+     "secs": 9,
+     "lines": 8,
+     "shot": "09-window"
+    }
+   ]
+  },
+  {
+   "type": "demo",
+   "file": "code/big_job.py",
+   "start": "ASK =",
+   "end": "return sum(bool",
+   "output": "video/big_job.txt",
+   "captions": [
+    {
+     "text": "Now a job no window can hold: 48 logs, about 60,000 tokens, and this model's limit is 32,768.",
+     "secs": 9,
+     "lines": 0,
+     "focus": null
+    },
+    {
+     "text": "Each worker copies matching sentences from one log. Code checks each line, and adds them up.",
+     "secs": 9,
+     "lines": 0,
+     "focus": [
+      "def copied",
+      "return sum"
+     ]
+    },
+    {
+     "text": "The team landed on the true total, 175. But every branch was wrong, by 2 to 8.",
+     "secs": 9,
+     "lines": 8,
+     "focus": null,
+     "shot": "10-big-job"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_logs_late.txt",
+   "captions": [
+    {
+     "text": "Every try, on late deliveries. One call read a quarter of the logs, with no error, and copied our example.",
+     "secs": 10,
+     "lines": 5
+    },
+    {
+     "text": "Small workers got closest: 3% to 16%. That's the team's real win, and it's still approximate.",
+     "secs": 9,
+     "lines": 7
+    },
+    {
+     "text": "A team of 4 big workers was erratic, at 78%. The pieces had to be small.",
+     "secs": 8,
+     "lines": 9,
+     "shot": "11-logs"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_logs_ranout.txt",
+   "captions": [
+    {
+     "text": "On run-outs, the small workers were 21% to 28% off. Being 27% off isn't a number for a report.",
+     "secs": 9,
+     "lines": 7
+    },
+    {
+     "text": "And plain text search got it exactly right, with no model at all. If code can do it, use code.",
+     "secs": 9,
+     "lines": 9,
+     "shot": "11b-text-search"
+    }
+   ]
+  },
+  {
+   "type": "recap",
+   "title": "Choosing an architecture",
+   "flow": [
+    "Plain code?",
+    "Permissions?",
+    "Fits in one?",
+    "Splits cleanly?"
+   ],
+   "captions": [
+    {
+     "text": "Ask in order. Can plain code do it? Then use code. It's exact and free.",
+     "secs": 7,
+     "focus": 0
+    },
+    {
+     "text": "Do parts need different permissions? Split for that reason. That's chapter 31.",
+     "secs": 7,
+     "focus": 1
+    },
+    {
+     "text": "Does it fit in one call, or a bigger window? One agent. For more thinking, add steps first.",
+     "secs": 9,
+     "focus": 2
+    },
+    {
+     "text": "Does it split into small, independent pieces? A team of small workers, and code joins the results.",
+     "secs": 9,
+     "focus": 3,
+     "shot": "12-chooser"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/exercise_output.txt",
+   "final": "5 passed",
+   "captions": [
+    {
+     "text": "Five exercises: build the tool, the choice, the count, the split and the chooser. They start failing.",
+     "secs": 9,
+     "lines": 9
+    },
+    {
+     "text": "You've finished when you see 5 passed.",
+     "secs": 6,
+     "lines": 13,
+     "shot": "13-exercises"
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "title": "You opened a team of agents.",
+   "points": [
+    "An agent can be a tool",
+    "A split adds a decision",
+    "Add steps before agents",
+    "Small pieces, code joins them"
+   ],
+   "next": "Next: chapter 31, security",
+   "captions": [
+    {
+     "text": "Start with one agent. Split only when you can name what forced you to.",
+     "secs": 7
+    },
+    {
+     "text": "Those counts come from one 7B model on one Mac. Test yours.",
+     "secs": 6
+    }
+   ]
+  }
+ ]
+}

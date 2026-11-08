@@ -1,0 +1,61 @@
+{
+ "chapter": "Chapter 33",
+ "scenes": [
+  {"type": "recap", "title": "Previously: Switching models", "flow": ["One line to switch", "14B broke the eval", "GeminiModel", "A spending limit"], "captions": [
+   {"text": "Recap of chapter 32: load_model switched models in one line.", "secs": 6, "focus": 0},
+   {"text": "A bigger local model dropped the eval from 113 to 14, with no error.", "secs": 7, "focus": 1},
+   {"text": "GeminiModel translated our messages by hand, with the key kept in .env.", "secs": 7, "focus": 2},
+   {"text": "And SpendLimit stopped at a dollar limit. Every call now has a price.", "secs": 7, "focus": 3}]},
+  {"type": "box", "label": "Cost and latency", "inner": ["where the tokens go", "where the time goes", "what to cut"], "captions": [
+   {"text": "Today's black box: what a run costs, in money and in time.", "secs": 6},
+   {"text": "Measure each run, then decide what to cut. Some cuts cost more than they save.", "secs": 8, "open": true, "shot": "01-box"}]},
+  {"type": "code", "file": "code/whitebox/meter.py", "start": "    def after_model(self, reply):", "end": "        return sum(step.tokens_in", "captions": [
+   {"text": "Meter is a hook. After each model call, it keeps the time and the token counts.", "secs": 8, "focus": ["def after_model", "self.steps.append"]},
+   {"text": "With prices, it adds up what the run cost. A local model costs nothing.", "secs": 7, "focus": ["def cost", "return sum("]}]},
+  {"type": "term", "file": "video/measure_7b.txt", "captions": [
+   {"text": "One question on 7B. Two calls: one to search, one to answer. The second reads twice as much.", "secs": 9, "lines": 6}]},
+  {"type": "term", "file": "video/measure_lite.txt", "captions": [
+   {"text": "The same on Flash-Lite. Predict: how long does a call take?", "secs": 6, "lines": 2},
+   {"text": "The first call took 34.8 seconds for 18 tokens. The next took 1.5. One run tells you little.", "secs": 9, "lines": 6, "shot": "02-measure"}]},
+  {"type": "term", "file": "video/tokens_7b.txt", "captions": [
+   {"text": "What does each call send? The system prompt and tool descriptions go every time, unchanged.", "secs": 9, "lines": 4},
+   {"text": "Search results are the biggest part. The question is 4%.", "secs": 6, "lines": 6, "shot": "03-tokens"}]},
+  {"type": "term", "file": "video/read_breakdown.txt", "captions": [
+   {"text": "Across a whole pass, search results were 43% on 7B and 65% on Flash-Lite.", "secs": 8, "lines": 4},
+   {"text": "And the time? The model took 117 of 120 seconds. The tools took 3.", "secs": 7, "lines": 9, "shot": "04-breakdown"}]},
+  {"type": "term", "file": "video/read_less.txt", "captions": [
+   {"text": "So send fewer search results. Predict: fewer tokens, but what happens to the score?", "secs": 8, "lines": 3},
+   {"text": "One result cut tokens by a fifth, and the score from 112 to 99. Every cut lost points here.", "secs": 9, "lines": 8, "shot": "05-less"}]},
+  {"type": "term", "file": "video/read_cost.txt", "captions": [
+   {"text": "On a paid model: one result is cheapest per right answer. Only five got every question right.", "secs": 9, "lines": 6, "shot": "06-cost"},
+   {"text": "The measurement can't choose for you. It tells you the price of each choice.", "secs": 7, "lines": 6}]},
+  {"type": "term", "file": "video/first_7b.txt", "captions": [
+   {"text": "People feel the first words, not the last. On 7B they arrive in a few hundredths of a second.", "secs": 9, "lines": 5}]},
+  {"type": "term", "file": "video/first_lite.txt", "captions": [
+   {"text": "On Flash-Lite they arrive with the whole reply. That's us: our GeminiModel doesn't stream.", "secs": 9, "lines": 5, "shot": "07-first"}]},
+  {"type": "term", "file": "video/read_stream.txt", "captions": [
+   {"text": "And the same short question took 1.7 seconds once and 17.5 another. One timing proves nothing.", "secs": 9, "lines": 8, "shot": "08-spread"}]},
+  {"type": "code", "file": "code/whitebox/meter.py", "start": "def run_many", "end": "        return list(pool.map", "captions": [
+   {"text": "A cloud model waits on someone else's computers, so we can wait for several at once.", "secs": 8, "focus": ["with ThreadPoolExecutor", "with ThreadPoolExecutor"]},
+   {"text": "Each question gets a new agent, because hooks keep state. Results come back in order.", "secs": 8, "focus": ["return list(pool.map", "return list(pool.map"]}]},
+  {"type": "term", "file": "video/read_parallel.txt", "captions": [
+   {"text": "Predict: eight at once. Flash-Lite went from 447 seconds to 64, with the same score.", "secs": 9, "lines": 8, "shot": "09-parallel"},
+   {"text": "7B on one Mac barely changed. And running at once saves time, not money.", "secs": 8, "lines": 8}]},
+  {"type": "term", "file": "video/cache_lite.txt", "captions": [
+   {"text": "Caching: send the same long prompt again, and part may come from the cache, at a tenth of the price.", "secs": 10, "lines": 8, "shot": "10-cache"},
+   {"text": "Flash-Lite cached 2,033 tokens a call, and charged 37% less.", "secs": 7, "lines": 8}]},
+  {"type": "term", "file": "video/cache_36.txt", "captions": [
+   {"text": "3.6 Flash cached nothing, every time. You can't count on caching. Check it.", "secs": 8, "lines": 8}]},
+  {"type": "recap", "title": "What to cut", "flow": ["Measure first", "Check against the eval", "Per right answer", "Model time first"], "captions": [
+   {"text": "Measure first. The question was 4% of what we sent, so shortening it would save nothing.", "secs": 9, "focus": 0},
+   {"text": "Check every cut against the eval. A cut that loses points isn't a saving.", "secs": 8, "focus": 1},
+   {"text": "Count cost per right answer, not per call.", "secs": 6, "focus": 2},
+   {"text": "For time, look at the model first. Run at once on the cloud, and stream when people watch.", "secs": 9, "focus": 3, "shot": "11-cut"}]},
+  {"type": "term", "file": "video/exercise_output.txt", "final": "5 passed", "captions": [
+   {"text": "Five exercises: shares, cost per right answer, cached cost, a timer and running at once.", "secs": 9, "lines": 7},
+   {"text": "You've finished when you see 5 passed.", "secs": 6, "lines": 7, "shot": "12-exercises"}]},
+  {"type": "end", "title": "You opened cost and latency.", "points": ["Measure first", "The model is the time", "Cost per right answer", "Caching isn't a promise"], "next": "Next: the Part 7 checkpoint, then Part 8", "captions": [
+   {"text": "Measure each run, then decide what to cut.", "secs": 6},
+   {"text": "These counts come from one Mac and one day. Measure your own.", "secs": 6}]}
+ ]
+}

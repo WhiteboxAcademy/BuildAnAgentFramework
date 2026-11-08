@@ -1,0 +1,5 @@
+$ python3 first_team.py
+Staff asked: How much stock was lost when the Harbour cellar flooded?
+Manager called ask_records, with task: How much stock was lost when the Harbour cellar flooded?
+Worker answered: The stock loss when the Harbour cellar flooded, according to the log, was worth £640, mostly in paper cups and syrups. [log-harbour-2025-02.md]
+Manager said: When the Harbour cellar flooded, the stock loss was worth £640, mostly in paper cups and syrups. [log-harbour-2025-02.md]

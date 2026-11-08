@@ -1,0 +1,8 @@
+$ python3 read_results.py less
+qwen2.5:7b, three passes of 42. k is search results per search, size is words per chunk
+Setup             Right  Tokens in  Seconds
+k=3, size 60     112/126   114,520      410
+k=1, size 60      99/126    88,495      306
+k=5, size 60     108/126   147,019      485
+k=3, size 30     101/126   115,096      408
+k=3, size 120    113/126   141,743      481

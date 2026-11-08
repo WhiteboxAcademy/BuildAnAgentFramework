@@ -1,0 +1,289 @@
+{
+ "note": "One Mac with 24 GB, Ollama 0.34.4, temperature 0.7, 8 November 2026. Gemini on the paid standard tier. k is the number of search results, size the words in each chunk. Local rows are three passes of 42 questions, cloud rows one pass. The k=3 Flash-Lite row is chapter 32's run.",
+ "breakdown": [
+  {
+   "model": "qwen2.5:7b",
+   "parts": {
+    "system prompt": 0.286,
+    "tool descriptions": 0.203,
+    "question": 0.036,
+    "tool results": 0.434,
+    "model's own turns": 0.041
+   },
+   "calls": 89,
+   "model_seconds": 117.4,
+   "tool_seconds": 3.1,
+   "wall_seconds": 120.4
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "parts": {
+    "system prompt": 0.174,
+    "tool descriptions": 0.123,
+    "question": 0.021,
+    "tool results": 0.647,
+    "model's own turns": 0.034
+   },
+   "calls": 128,
+   "model_seconds": 209.7,
+   "tool_seconds": 8.4,
+   "wall_seconds": 218.1
+  }
+ ],
+ "less_local": [
+  {
+   "setup": "k=3, size 60",
+   "passed": 112,
+   "runs": 126,
+   "calls": 262,
+   "tokens_in": 114520,
+   "tokens_out": 9970,
+   "model_seconds": 405.6,
+   "tool_seconds": 4.4,
+   "wall_seconds": 410.0
+  },
+  {
+   "setup": "k=1, size 60",
+   "passed": 99,
+   "runs": 126,
+   "calls": 266,
+   "tokens_in": 88495,
+   "tokens_out": 9165,
+   "model_seconds": 300.0,
+   "tool_seconds": 6.1,
+   "wall_seconds": 306.1
+  },
+  {
+   "setup": "k=5, size 60",
+   "passed": 108,
+   "runs": 126,
+   "calls": 264,
+   "tokens_in": 147019,
+   "tokens_out": 9976,
+   "model_seconds": 479.9,
+   "tool_seconds": 5.3,
+   "wall_seconds": 485.2
+  },
+  {
+   "setup": "k=3, size 30",
+   "passed": 101,
+   "runs": 126,
+   "calls": 274,
+   "tokens_in": 115096,
+   "tokens_out": 10771,
+   "model_seconds": 398.8,
+   "tool_seconds": 9.7,
+   "wall_seconds": 408.5
+  },
+  {
+   "setup": "k=3, size 120",
+   "passed": 113,
+   "runs": 126,
+   "calls": 261,
+   "tokens_in": 141743,
+   "tokens_out": 9484,
+   "model_seconds": 478.1,
+   "tool_seconds": 3.3,
+   "wall_seconds": 481.4
+  }
+ ],
+ "less_cloud": [
+  {
+   "setup": "k=1",
+   "passed": 38,
+   "runs": 42,
+   "tokens_in": 54227,
+   "tokens_out": 3222,
+   "dollars": 0.0184,
+   "per_correct": 0.000484
+  },
+  {
+   "setup": "k=3",
+   "passed": 41,
+   "runs": 42,
+   "tokens_in": 69845,
+   "tokens_out": 2875,
+   "dollars": 0.0218,
+   "per_correct": 0.000532
+  },
+  {
+   "setup": "k=5",
+   "passed": 42,
+   "runs": 42,
+   "tokens_in": 106631,
+   "tokens_out": 2945,
+   "dollars": 0.0311,
+   "per_correct": 0.00074
+  }
+ ],
+ "parallel": {
+  "qwen2.5:7b": [
+   {
+    "workers": 1,
+    "passed": 38,
+    "of": 42,
+    "seconds": 147.3,
+    "calls": 92
+   },
+   {
+    "workers": 4,
+    "passed": 36,
+    "of": 42,
+    "seconds": 147.1,
+    "calls": 90
+   },
+   {
+    "workers": 8,
+    "passed": 37,
+    "of": 42,
+    "seconds": 134.7,
+    "calls": 89
+   }
+  ],
+  "gemini-3.1-flash-lite": [
+   {
+    "workers": 1,
+    "passed": 40,
+    "of": 42,
+    "seconds": 446.9,
+    "calls": 126
+   },
+   {
+    "workers": 4,
+    "passed": 41,
+    "of": 42,
+    "seconds": 95.6,
+    "calls": 118
+   },
+   {
+    "workers": 8,
+    "passed": 40,
+    "of": 42,
+    "seconds": 64.1,
+    "calls": 123
+   }
+  ]
+ },
+ "stream": {
+  "qwen2.5:7b": [
+   {
+    "first_words": 1.0,
+    "whole_reply": 1.8,
+    "tokens_out": 39
+   },
+   {
+    "first_words": 0.03,
+    "whole_reply": 0.86,
+    "tokens_out": 41
+   },
+   {
+    "first_words": 0.03,
+    "whole_reply": 1.06,
+    "tokens_out": 51
+   }
+  ],
+  "gemini-3.1-flash-lite": [
+   {
+    "first_words": 5.77,
+    "whole_reply": 5.77,
+    "tokens_out": 55
+   },
+   {
+    "first_words": 1.68,
+    "whole_reply": 1.68,
+    "tokens_out": 57
+   },
+   {
+    "first_words": 17.47,
+    "whole_reply": 17.47,
+    "tokens_out": 59
+   }
+  ]
+ },
+ "cache": {
+  "gemini-3.1-flash-lite": [
+   {
+    "try": 1,
+    "status": 200,
+    "prompt_tokens": 6569,
+    "cached": 0,
+    "seconds": 1.71,
+    "cost": 0.001675
+   },
+   {
+    "try": 2,
+    "status": 200,
+    "prompt_tokens": 6569,
+    "cached": 0,
+    "seconds": 2.38,
+    "cost": 0.001675
+   },
+   {
+    "try": 3,
+    "status": 200,
+    "prompt_tokens": 6569,
+    "cached": 3977,
+    "seconds": 2.91,
+    "cost": 0.00078
+   },
+   {
+    "try": 4,
+    "status": 200,
+    "prompt_tokens": 6569,
+    "cached": 3977,
+    "seconds": 2.19,
+    "cost": 0.000779
+   },
+   {
+    "try": 5,
+    "status": 200,
+    "prompt_tokens": 6569,
+    "cached": 3977,
+    "seconds": 1.71,
+    "cost": 0.00078
+   }
+  ],
+  "gemini-3.6-flash": [
+   {
+    "try": 1,
+    "status": 200,
+    "prompt_tokens": 6569,
+    "cached": 0,
+    "seconds": 2.26,
+    "cost": 0.005729
+   },
+   {
+    "try": 2,
+    "status": 200,
+    "prompt_tokens": 6569,
+    "cached": 0,
+    "seconds": 1.79,
+    "cost": 0.00532
+   },
+   {
+    "try": 3,
+    "status": 200,
+    "prompt_tokens": 6569,
+    "cached": 0,
+    "seconds": 1.78,
+    "cost": 0.005279
+   },
+   {
+    "try": 4,
+    "status": 200,
+    "prompt_tokens": 6569,
+    "cached": 0,
+    "seconds": 2.12,
+    "cost": 0.005238
+   },
+   {
+    "try": 5,
+    "status": 200,
+    "prompt_tokens": 6569,
+    "cached": 0,
+    "seconds": 1.83,
+    "cost": 0.005448
+   }
+  ]
+ }
+}

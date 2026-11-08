@@ -1,0 +1,7 @@
+$ python3 too_much_at_once.py
+10 in one chat:  9 of 10 right, 2 model calls
+  It said: 1. The house blend recipe uses 18 grams of coffee to give 36 grams of espresso. [espresso-
+10 chats of one: 8 of 10 right, 20 model calls
+20 in one chat:  0 of 20 right, 2 model calls
+  It said: I found that the Old Mill branch shares its building with the roastery, and visitors may w
+20 chats of one: 17 of 20 right, 40 model calls

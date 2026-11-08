@@ -1,0 +1,5 @@
+$ python3 first_words.py ollama/qwen2.5:7b
+Try   First words  Whole reply
+1           0.21s        1.24s
+2           0.02s        1.36s
+3           0.03s        0.88s

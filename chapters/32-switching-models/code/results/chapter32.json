@@ -1,0 +1,134 @@
+{
+ "note": "One Mac with 24 GB, Ollama 0.34.4, temperature 0.7, November 2026. Gemini on the paid standard tier. Prices are Google's paid rates on 2026-11-08 in dollars per million tokens. The 14B eval was run twice, once alongside other work (10 of 126) and once alone (14 of 126); the second is shown.",
+ "eval": [
+  {
+   "setup": "qwen2.5:7b",
+   "passed": 113,
+   "runs": 126,
+   "calls": 260,
+   "tokens_in": 111692,
+   "seconds": 400,
+   "empty": 0,
+   "step_limit": 0,
+   "not_english": 0
+  },
+  {
+   "setup": "qwen2.5:14b",
+   "passed": 14,
+   "runs": 126,
+   "calls": 160,
+   "tokens_in": 42297,
+   "seconds": 569,
+   "empty": 3,
+   "step_limit": 0,
+   "not_english": 77
+  },
+  {
+   "setup": "qwen2.5:14b, extra sentence",
+   "passed": 33,
+   "runs": 126,
+   "calls": 267,
+   "tokens_in": 85718,
+   "seconds": 665,
+   "empty": 39,
+   "step_limit": 0,
+   "not_english": 27
+  },
+  {
+   "setup": "qwen2.5:7b, extra sentence",
+   "passed": 108,
+   "runs": 126,
+   "calls": 252,
+   "tokens_in": 107222,
+   "seconds": 380,
+   "empty": 0,
+   "step_limit": 0,
+   "not_english": 0
+  },
+  {
+   "setup": "gemini-3.1-flash-lite",
+   "passed": 41,
+   "runs": 42,
+   "calls": 120,
+   "tokens_in": 69845,
+   "seconds": 244,
+   "empty": 0,
+   "step_limit": 1,
+   "not_english": 0
+  },
+  {
+   "setup": "gemini-3.6-flash",
+   "passed": 36,
+   "runs": 42,
+   "calls": 148,
+   "tokens_in": 123654,
+   "seconds": 401,
+   "empty": 0,
+   "step_limit": 5,
+   "not_english": 0
+  }
+ ],
+ "tools": [
+  {
+   "model": "qwen2.5:7b",
+   "all_40": 12,
+   "router": 44,
+   "tries": 60
+  },
+  {
+   "model": "qwen2.5:14b",
+   "all_40": 12,
+   "router": 60,
+   "tries": 60
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "all_40": 20,
+   "router": 20,
+   "tries": 20
+  },
+  {
+   "model": "gemini-3.6-flash",
+   "all_40": 20,
+   "router": 20,
+   "tries": 20
+  }
+ ],
+ "attacks": [
+  {
+   "model": "qwen2.5:7b",
+   "leaked": 18,
+   "runs": 40
+  },
+  {
+   "model": "qwen2.5:14b",
+   "leaked": 1,
+   "runs": 40
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "leaked": 4,
+   "runs": 20
+  },
+  {
+   "model": "gemini-3.6-flash",
+   "leaked": 0,
+   "runs": 20
+  }
+ ],
+ "prices": {
+  "gemini-3.1-flash-lite": [
+   0.25,
+   1.5
+  ],
+  "gemini-3.6-flash": [
+   0.75,
+   3.75
+  ],
+  "gemini-3.8-flash": [
+   0.75,
+   3.75
+  ]
+ },
+ "spent": 0.57
+}

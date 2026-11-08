@@ -1,0 +1,328 @@
+<title>Whitebox: Multi-agent systems</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a black box header opens onto a white reading column; media breaks wider. */
+:root {
+  --bg: #fbfbf9; --surface: #ffffff; --ink: #16181d; --muted: #5d616b; --rule: #d9dade;
+  --accent: #2a4bd7; --tint: #e7ebfb; --box: #0c0d10; --on-box: #fbfbf9; --box-muted: #a9adb8;
+  --term: #101218; --term-ink: #e4e6ec; --term-cmd: #9db1ff;
+  --display: "Bricolage Grotesque", Georgia, serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111318; --surface: #191c23; --ink: #e9eaee; --muted: #a4a8b3; --rule: #2e323c;
+    --accent: #9db1ff; --tint: #20274a; --box: #050507; --on-box: #fbfbf9; --box-muted: #a9adb8;
+    --term: #08090c; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111318; --surface: #191c23; --ink: #e9eaee; --muted: #a4a8b3; --rule: #2e323c;
+  --accent: #9db1ff; --tint: #20274a; --box: #050507; --on-box: #fbfbf9; --box-muted: #a9adb8;
+  --term: #08090c; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.65 var(--body); }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 68rem; margin: 0 auto; min-width: 0; }
+.col { max-width: 42rem; display: grid; gap: 1rem; min-width: 0; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.6rem, 7vw, 4.4rem); line-height: 1.02; font-weight: 700; letter-spacing: -0.015em; }
+h2 { font-size: clamp(1.6rem, 3.4vw, 2.2rem); line-height: 1.15; font-weight: 700; }
+h3 { font-size: 1.2rem; line-height: 1.3; font-weight: 700; }
+p { margin: 0; }
+a { color: var(--accent); }
+a:focus-visible, video:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+code { font-family: var(--mono); font-size: 0.92em; }
+
+header.mast { background: var(--box); color: var(--on-box); padding-block: 1.6rem 3rem; }
+.mast .wrap { display: grid; gap: 2.4rem; }
+.brand { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font: 500 1rem var(--display); }
+.brand span:first-child { display: flex; align-items: center; gap: 0.55rem; }
+.brand i { width: 0.95rem; height: 0.95rem; border: 3px solid currentColor; display: block; }
+.brand span:last-child { font: 400 0.85rem var(--mono); color: var(--box-muted); align-self: center; }
+.mast .intro { display: grid; gap: 1rem; max-width: 46rem; }
+.mast .dek { font-size: 1.2rem; color: var(--box-muted); }
+.meta { font: 400 0.85rem var(--mono); color: var(--box-muted); }
+
+main { padding-block: 0 4rem; }
+section { padding-block: 3.2rem 0; display: grid; gap: 1.4rem; }
+.label { font: 600 0.78rem/1.2 var(--mono); color: var(--accent); }
+.lede { font-size: 1.15rem; }
+
+figure { margin: 0; display: grid; gap: 0.5rem; min-width: 0; }
+figcaption { font-size: 0.86rem; color: var(--muted); }
+video { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 1440 / 900; background: #000; }
+
+ol.loop { margin: 0; padding-left: 1.3rem; display: grid; gap: 0.35rem; }
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2.4rem; counter-reset: step; }
+ol.steps > li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 1.6rem; align-items: start; counter-increment: step; }
+ol.steps .txt { display: grid; gap: 0.45rem; min-width: 0; }
+ol.steps .txt h3::before { content: counter(step); display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; margin-right: 0.55rem; background: var(--ink); color: var(--bg); font: 600 0.85rem/1 var(--mono); vertical-align: 0.1em; }
+ol.steps img { width: 100%; height: auto; display: block; border: 1px solid var(--rule); }
+@media (max-width: 720px) { ol.steps > li { grid-template-columns: minmax(0, 1fr); } }
+
+pre { margin: 0; background: var(--term); color: var(--term-ink); padding: 1rem 1.1rem; overflow-x: auto; font: 400 0.86rem/1.6 var(--mono); }
+pre .cmd { color: var(--term-cmd); }
+.tablebox { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.98rem; }
+th, td { text-align: left; padding: 0.65rem 0.8rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; color: var(--muted); }
+td { font-variant-numeric: tabular-nums; }
+.fails { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.fails div { background: var(--tint); padding: 1rem 1.1rem; display: grid; gap: 0.3rem; align-content: start; min-width: 0; }
+.list { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.35rem; }
+.next { background: var(--box); color: var(--on-box); padding: 1.4rem 1.5rem; display: grid; gap: 0.3rem; }
+.next span { font: 400 0.85rem var(--mono); color: var(--box-muted); }
+footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); font-size: 0.85rem; color: var(--muted); }
+</style>
+
+<header class="mast gutter">
+  <div class="wrap">
+    <div class="brand"><span><i></i>Whitebox Academy</span><span>Build an AI Agent from Scratch</span></div>
+    <div class="intro">
+      <span class="meta">Chapter 30 of 35 · Part 7: Multi-agent and production · About 3 hours</span>
+      <h1>Multi-agent systems</h1>
+      <p class="dek">Is a team of agents better than one? Build one, then test it on six kinds of job, and see where it wins, where it loses, and how to choose.</p>
+    </div>
+  </div>
+</header>
+
+<main class="gutter">
+  <div class="wrap">
+<section>
+<figure>
+<video controls playsinline preload="metadata" poster="media/10-big-job.jpg">
+<source src="media/video.mp4" type="video/mp4">
+</video>
+<figcaption>Chapter video, 6 minutes 35 seconds, no sound. It starts with a 27-second recap, and captions on screen explain each step.</figcaption>
+</figure>
+</section>
+<section>
+<div class="col"><span class="label">Where we are</span>
+<h2>The next step, or so people say</h2>
+<p class="lede">Part 6 ended with an agent that can use tools it doesn’t own. The usual next step is to split the work between several agents. Sometimes that’s right. Often it isn’t. This chapter teaches one new idea, an agent can be a tool for another agent, then tests it on six kinds of job.</p>
+<p>By the end, you should be able to look at a job and choose an architecture, with a reason.</p>
+<p><a href="https://claude.ai/artifact/1uGgX3WK7v3D5HyfvB782p#start-ollama">Start Ollama</a>, activate the <code>.venv</code> from chapter 05, and work in <code>chapters/30-multi-agent-systems/code</code>. The number to beat: one agent with one search scored <strong>113 of 126</strong> on chapter 29’s eval.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">The one idea</span>
+<h2>An agent as a tool</h2></div>
+<div class="col"><p>A <code>Tool</code> is a name, a description, some parameters and a function. Nothing says that function can’t run a whole agent.</p></div>
+<pre>def agent_tool(agent, name, description):
+    &quot;&quot;&quot;Turn an agent into a tool. Each task starts a fresh chat, so the task must say everything.&quot;&quot;&quot;
+
+    def ask(task: Annotated[str, &quot;The whole task, with every detail from the user&quot;]) -&gt; str:
+        return agent.run(task).answer
+
+    return Tool(name, description, parameters_of(ask), ask)</pre>
+<div class="col"><p>The worker starts with an empty chat, so it knows only what the task says. The manager sees only the answer. <strong>Predict:</strong> how many model calls does one question take now?</p></div>
+<pre><span class="cmd">$ python3 first_team.py</span>
+Staff asked: How much stock was lost when the Harbour cellar flooded?
+Manager called ask_records, with task: How much stock was lost when the Harbour cellar flooded?
+Worker answered: The stock loss when the Harbour cellar flooded, according to the log, was worth £640, mostly in paper cups and syrups. [log-harbour-2025-02.md]
+Manager said: When the Harbour cellar flooded, the stock loss was worth £640, mostly in paper cups and syrups. [log-harbour-2025-02.md]</pre>
+<figure><img src="media/02-first-team.jpg" alt="A manager passes a question to a worker" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>It worked, in four model calls. One agent takes two.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">A cheaper team</span>
+<h2>A router</h2></div>
+<div class="col"><p>One model call picks a worker, and that worker does the whole job.</p></div>
+<pre>    def pick(self, question):
+        names = &quot;\n&quot;.join(f&quot;{name}: {description}&quot; for name, (description, _) in self.workers.items())
+        prompt = f&quot;Who should handle this request?\n{names}\n\nRequest: {question}\n\nReply with only the name.&quot;
+        said = self.model.chat([Message(&quot;user&quot;, prompt)], temperature=0).content.lower()
+        return next((name for name in self.workers if name in said), next(iter(self.workers)))</pre>
+<div class="col"><p><strong>Predict:</strong> four questions, two for each worker. How many arrive at the right one?</p></div>
+<pre><span class="cmd">$ python3 first_router.py</span>
+handbook  How much is the till float?
+          The initial float for each till is £150. [cash-handling.md]
+handbook  How much did the film crew pay to use Old Mill?
+          I don&#x27;t know. The handbook does not contain information about payments to the film crew for usin
+handbook  Who was the guest at the Riverside cupping club in June 2025?
+          I don&#x27;t know the specific guest for the Riverside cupping club in June 2025 based on the informa
+records   How much extra do oat, soya and coconut milk cost?
+          I don&#x27;t know the specific extra costs for oat, soya, and coconut milk from the information provi</pre>
+<figure><img src="media/03-router.jpg" alt="Three of four questions go to the wrong worker" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>One of four. Each worker honestly said it didn’t know. Nothing crashed. The team just failed quietly.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">The first test</span>
+<h2>Does the team beat one agent?</h2></div>
+<div class="col"><p><strong>Predict:</strong> specialists have smaller, cleaner indexes. Will they beat 113?</p></div>
+<pre><span class="cmd">$ python3 read_results.py teams</span>
+Setup                  Of 126  Calls  Tokens in  Seconds
+one agent                 113    260    111,692      400
+two tools                  88    287    163,105      555
+router                     96    384    116,254      425
+router, new wording        94    392    135,943      422
+manager                    92    499    191,316      692
+strict manager            102    595    248,246      865
+perfect router            113    252    100,658      396</pre>
+<figure><img src="media/04-teams.jpg" alt="Every real team scored below one agent" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>Every real team did worse, and cost more. <strong>Splitting the documents created a decision, and that decision can go wrong.</strong> Rewording the router only moved the mistakes around: wrong routes went from 18 to 33.</p>
+<p>The perfect router was told the right worker every time, and it only tied at 113. So a better router can only catch up here.</p>
+<p>We expected details to get lost in handoffs, and they didn’t. The manager passed 114 of 126 tasks on word for word.</p>
+<p>A team also multiplies limits: 8 steps inside 8 steps can mean more than 60 model calls.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">When it breaks</span>
+<h2>A worker that never returns</h2></div>
+<div class="col"><p>One run froze for 13 minutes. We believe this later reply was the same fault, caught by a limit:</p></div>
+<pre><span class="cmd">$ python3 read_results.py runaway</span>
+Question: How much did the Riverside roof repair cost in 2025?
+Tokens written: 1,054
+Start: I couldn&#x27;t find any specific information about a roof repair cost for Riverside in 2025. The logs do not mention any roof repairs or their associated 
+End:   ide-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md] [log-riverside-2025-08.md] [log-riverside-2025-05.md] [log-riverside-2025-02.md]</pre>
+<div class="col"><p>A timeout limits silence, and a runaway stream is never silent. So <code>OllamaModel</code> now sets <code>num_predict</code>, a limit on length. Earlier chapters keep their code, and <code>docs/troubleshooting.md</code> covers what to do there.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">What published work says</span>
+<h2>Where a team should win</h2></div>
+<div class="col"><ul class="list"><li><strong>Too big for one context, and it splits cleanly.</strong> Chain of Agents beat retrieval on all eight datasets it was tested on.</li><li><strong>Independent pieces.</strong> A Google, DeepMind and MIT study found +80.8% on finance work that splits, and up to −70% on sequential planning.</li><li><strong>Other reasons.</strong> Different permissions, or another company owns part of it.</li></ul>
+<p>The warning: many wins may just be extra compute. At equal budget, single agents matched or beat teams in two studies, one on a 7B model. So every test here has a fair rival.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">Test two</span>
+<h2>More agents, or more steps?</h2></div>
+<div class="col"><p>Hop questions need two facts. Its rival is one agent told to do the same two steps. <strong>Predict:</strong> which comes out on top?</p></div>
+<pre><span class="cmd">$ python3 read_results.py relay</span>
+Setup                 Five passes, of 30  Of 150  Calls per pass
+one agent             11 11 11 10 10          53              61
+relay of two agents   17 20 18 18 20          93             117
+one agent, two steps  17 15 16 14 13          75              98</pre>
+<figure><img src="media/06-relay.jpg" alt="A relay beats one agent with two steps over five passes" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>Two steps took one agent from 53 to 75, so extra work is part of the gain. The relay did better again, at 93, using about a fifth more calls.</p>
+<p>The relay’s two agents are the same model with the same prompt. The real differences are a clean chat and how the note is worded, so this may say more about clean context than teamwork. We didn’t test which part did it.</p>
+<p>After one pass they tied at 17, and we wrote that the agent added nothing. Five passes said otherwise. <strong>One pass wasn’t enough to say.</strong></p></div>
+</section>
+<section>
+<div class="col"><span class="label">Test three</span>
+<h2>A second opinion</h2></div>
+<div class="col"><p><strong>Predict:</strong> will a fresh reviewer, with its own search, fix more than it breaks?</p></div>
+<pre><span class="cmd">$ python3 read_results.py review</span>
+Setup            Of 126 Fixed Broke Extra calls
+first               110     -     -         270
+self-check          109     3     4         126
+fresh reviewer      110     5     5         252
+vote of 3           112     7     5         540</pre>
+<figure><img src="media/07-review.jpg" alt="The reviewer fixed five answers and broke five" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>It fixed 5 and broke 5. The vote’s two extra points are within the noise, at three times the calls. A different, stronger reviewer might do better, and chapter 32 gives you one to try.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">Test four</span>
+<h2>Too much at once</h2></div>
+<div class="col"><p>A pile of independent questions: one chat, or one chat each? <strong>Predict:</strong> which breaks first?</p></div>
+<pre><span class="cmd">$ python3 too_much_at_once.py</span>
+10 in one chat:  9 of 10 right, 2 model calls
+  It said: 1. The house blend recipe uses 18 grams of coffee to give 36 grams of espresso. [espresso-
+10 chats of one: 8 of 10 right, 20 model calls
+20 in one chat:  0 of 20 right, 2 model calls
+  It said: I found that the Old Mill branch shares its building with the roastery, and visitors may w
+20 chats of one: 17 of 20 right, 40 model calls</pre>
+<figure><img src="media/08-batch.jpg" alt="Twenty questions in one chat get none right" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>Past the window, one chat scored zero, with no error. Here’s the full run:</p></div>
+<pre><span class="cmd">$ python3 read_results.py batch</span>
+In one chat   Window Right   Of Calls
+1            default    93  108   221
+5            default    57  108    68
+10           default    84  108    27
+20           default     0  108    13
+36           default     0  108     6
+36             16384    83  108     7</pre>
+<figure><img src="media/09-window.jpg" alt="A bigger window nearly matches one chat each" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>One chat each won, but a bigger window got 83 in 7 calls, not 221. Five at a time doing worse than ten was real: a rerun got 56, because the model often answered only part of the list.</p>
+<p>Chapter 29’s forty long tools gave the same result:</p></div>
+<pre><span class="cmd">$ python3 read_results.py tools</span>
+Setup                             Right Wrong None Calls Read at most
+one agent, 40 tools                  12    21   27    60        2,050
+one agent, 40 tools, big window      56     0    4    60        6,352
+router, 4 groups                     44     6   10   120        1,835</pre>
+</section>
+<section>
+<div class="col"><span class="label">Test five</span>
+<h2>Too big for any window</h2></div>
+<div class="col"><p>48 logs, about 60,000 tokens, and this model’s limit is 32,768. How many deliveries were late, at each branch? Each worker copies matching sentences from one log, and code checks and counts them. <strong>Predict:</strong> will 48 small workers beat one big call?</p></div>
+<pre><span class="cmd">$ python3 big_job.py</span>
+48 logs, 245,680 characters
+
+Branch      Exact pattern Word delivery  Team of 12
+harbour                45            86          43
+old-mill               38            75          46
+riverside              51           105          48
+station                41            78          38</pre>
+<figure><img src="media/10-big-job.jpg" alt="The team reaches the true total with every branch wrong" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>The team’s total was exactly right in this run, and every branch was wrong, by 2 to 8. Here’s every try:</p></div>
+<pre><span class="cmd">$ python3 read_results.py logs</span>
+How far off each try was, on average across the four branches
+Count    Setup                       Off by
+late     one agent, search           98%, 98%, 98%
+late     one call, everything        74%, 72%, 72%
+late     team of 48, workers count   37%, 40%, 38%
+late     team of 48, code counts     3%, 16%, 12%
+late     team of 4, code counts      78%
+late     text search, obvious word   96%
+ran-out  one agent, search           2493%, 2276%, 1175%
+ran-out  one call, everything        71%, 72%, 71%
+ran-out  team of 48, workers count   22%, 21%, 24%
+ran-out  team of 48, code counts     28%, 27%, 27%
+ran-out  team of 4, code counts      158%
+ran-out  text search, obvious word   0%
+baked    one agent, search           100%, 5194%, 100%
+baked    one call, everything        60%, 60%, 60%
+baked    team of 48, workers count   39%, 45%, 46%
+baked    team of 48, code counts     43%, 42%, 38%
+baked    team of 4, code counts      64%
+baked    text search, obvious word   38%</pre>
+<figure><img src="media/11-logs.jpg" alt="Small workers come closest" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><ul class="list"><li><strong>One call</strong> asked for 98,304 tokens, read 16,386 with no error, and mostly copied our example.</li><li><strong>Search</strong> can’t count what it can’t see.</li><li><strong>48 small workers</strong> got closest: 3% to 16% on late deliveries, and 21% to 46% on the others.</li><li><strong>A team of 4</strong> was erratic. The pieces had to be small.</li><li><strong>Plain text search</strong> got run-outs exactly right, with no model at all.</li></ul>
+<p>Our first count seemed to collapse, finding 7 run-outs of 166. The workers were right, and our check was case-sensitive. When a result looks too bad, suspect your test.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">The point</span>
+<h2>Choosing an architecture</h2></div>
+<figure><img src="media/12-chooser.jpg" alt="Four questions to ask in order" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><ol class="list"><li><strong>Can plain code do it?</strong> Use code.</li><li><strong>Do parts need different permissions, or does someone else own them?</strong> Split for that reason.</li><li><strong>Does it fit in one call, or a bigger window?</strong> One agent. For more thinking, add steps first.</li><li><strong>Does it split into small, independent pieces?</strong> A team of small workers, and code joins the results.</li><li><strong>None of those?</strong> Rethink the job.</li></ol>
+<p>Then measure your choice against the simpler option at the same budget, and keep the team only if it wins.</p></div>
+</section>
+<section>
+<div class="col"><span class="label">Your turn</span>
+<h2>Exercises</h2></div>
+<div class="col"><p>Open <code>exercises.py</code> and complete the five TODOs: <code>worker_tool</code>, <code>pick_name</code>, <code>count_copied</code>, <code>add_up</code> and <code>choose_architecture</code>. Then run <code>python3 -m pytest test_exercises.py</code> from that folder. These checks use a fake model, so Ollama doesn’t need to run.</p></div>
+<pre><span class="cmd">$ python3 -m pytest test_exercises.py -q --tb=no</span>
+FFFFF                                                                    [100%]
+=========================== short test summary info ============================
+FAILED test_exercises.py::test_todo_1_worker_tool - AttributeError: &#x27;NoneType...
+FAILED test_exercises.py::test_todo_2_pick_name - AssertionError: assert None...
+FAILED test_exercises.py::test_todo_3_count_copied - AssertionError: assert N...
+FAILED test_exercises.py::test_todo_4_add_up - AssertionError: assert None ==...
+FAILED test_exercises.py::test_todo_5_choose_architecture - AssertionError: a...
+5 failed in 0.05s
+
+<span class="cmd">$ python3 -m pytest test_exercises.py -q --tb=no   # after the TODOs</span>
+.....                                                                    [100%]
+5 passed in 0.04s</pre>
+<figure><img src="media/13-exercises.jpg" alt="Five checks pass" loading="lazy" width="1440" height="900"></figure>
+<div class="col"><p>Worked answers are in <code>solutions/exercises.py</code>.</p></div>
+</section>
+<section>
+<div class="col">
+<span class="label">Recap</span>
+<h2>What you opened</h2>
+<ul class="list"><li>An agent can be a tool for another agent, and <code>Agent</code> didn’t change.</li><li>One agent scored 113 of 126. Real teams scored 92 to 102, and a perfect router only tied.</li><li>On dependent steps, a relay got 93 of 150, one agent with two steps 75, and one agent 53.</li><li>A fresh reviewer fixed 5 and broke 5.</li><li>Past the window, one chat scored zero. One chat each got 93 of 108, and a bigger window got 83 in far fewer calls.</li><li>On a job too big for any window, small workers came closest, and were still 3% to 46% off.</li><li>Plain text search counted run-outs exactly.</li></ul>
+<p>Start with one agent. Split only when you can name what forced you to, and then measure it.</p>
+<p>These counts come from one Mac and <code>qwen2.5:7b</code>, and a stronger model could change any of them. The sources are listed in the <a href="https://github.com/WhiteboxAcademy/BuildAnAgentFramework/tree/main/chapters/30-multi-agent-systems">chapter’s README</a>.</p>
+</div>
+<div class="next"><span>Next</span><h3>Chapter 31: Security</h3></div>
+</section>
+
+    <footer>
+      <p>Get the code at <a href="https://github.com/WhiteboxAcademy/BuildAnAgentFramework">github.com/WhiteboxAcademy/BuildAnAgentFramework</a>. Code is under the MIT License. Articles and videos are under CC BY 4.0.</p>
+    </footer>
+  </div>
+</main>

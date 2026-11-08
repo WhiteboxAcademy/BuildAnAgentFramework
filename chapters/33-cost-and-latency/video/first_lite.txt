@@ -1,0 +1,5 @@
+$ python3 first_words.py gemini/gemini-3.1-flash-lite
+Try   First words  Whole reply
+1           1.95s        1.95s
+2           2.12s        2.12s
+3           1.29s        1.29s

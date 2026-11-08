@@ -1,0 +1,5 @@
+$ python3 one_question.py gemini/gemini-3.1-flash-lite
+Model: gemini/gemini-3.1-flash-lite
+Question: How much is the till float?
+Answer: Each till starts the day with a float of £150. [cash-handling.md]
+2 model calls, 587 tokens in, 40 out, 3.3 seconds

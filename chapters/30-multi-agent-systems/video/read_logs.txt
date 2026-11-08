@@ -1,0 +1,21 @@
+$ python3 read_results.py logs
+How far off each try was, on average across the four branches
+Count    Setup                       Off by
+late     one agent, search           98%, 98%, 98%
+late     one call, everything        74%, 72%, 72%
+late     team of 48, workers count   37%, 40%, 38%
+late     team of 48, code counts     3%, 16%, 12%
+late     team of 4, code counts      78%
+late     text search, obvious word   96%
+ran-out  one agent, search           2493%, 2276%, 1175%
+ran-out  one call, everything        71%, 72%, 71%
+ran-out  team of 48, workers count   22%, 21%, 24%
+ran-out  team of 48, code counts     28%, 27%, 27%
+ran-out  team of 4, code counts      158%
+ran-out  text search, obvious word   0%
+baked    one agent, search           100%, 5194%, 100%
+baked    one call, everything        60%, 60%, 60%
+baked    team of 48, workers count   39%, 45%, 46%
+baked    team of 48, code counts     43%, 42%, 38%
+baked    team of 4, code counts      64%
+baked    text search, obvious word   38%
