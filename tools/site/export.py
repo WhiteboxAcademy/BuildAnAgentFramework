@@ -184,6 +184,11 @@ def main():
         write_chapter(site, page, next_page)
         write_youtube_details(page)
         print(f"Exported {page['slug']}")
+    # The final-project roll page reads the ideas from its own copy, so keep it the same as the course's.
+    roll_page = site / SITE_PATH.lstrip("/") / "final-project"
+    if roll_page.exists():
+        shutil.copy(Path("final-project") / "projects.json", roll_page / "projects.json")
+        print("Copied final-project/projects.json")
 
 
 if __name__ == "__main__":

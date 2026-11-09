@@ -1,0 +1,1065 @@
+{
+ "version": 2,
+ "rules": "A weekend's work. Works on qwen2.5:7b. Free: no paid service and no sign-up. No one else's personal data. Build it with any framework from the course: whitebox, LangGraph or Pydantic AI. Report what it used: tokens and time, and cost on a cloud model.",
+ "levels": {
+  "starter": "One agent, a few tools or a search, and a short run.",
+  "intermediate": "More moving parts: memory, state that lasts, the sandbox or MCP.",
+  "advanced": "Several agents, limits enforced in code, or careful measurement."
+ },
+ "ideas": [
+  {
+   "number": 1,
+   "group": "Your notes and documents",
+   "name": "Notes oracle",
+   "level": "starter",
+   "what": "Answers questions about your own notes folder, naming the file the answer came from",
+   "harder": "Keeps its index up to date as you add or change notes, re-reading only what changed",
+   "builds_on": "RAG 19-23",
+   "eval_idea": "10 questions whose answers you know are in your notes",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 2,
+   "group": "Your notes and documents",
+   "name": "Household manuals",
+   "level": "starter",
+   "what": "Answers questions from the PDFs of your appliances' manuals",
+   "harder": "Handles several manuals at once, and asks which appliance you mean when the question is unclear",
+   "builds_on": "RAG 19-22",
+   "eval_idea": "10 questions with page numbers you checked",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 3,
+   "group": "Your notes and documents",
+   "name": "Rules referee",
+   "level": "starter",
+   "what": "Settles arguments over a board or card game by answering from its rulebook, quoting the rule",
+   "harder": "Handles house rules you add, and says which rule wins when the two disagree",
+   "builds_on": "RAG 20-22, evals 18",
+   "eval_idea": "10 real disputes from your table, with the rule you'd point to; it says when the rulebook doesn't settle it",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 4,
+   "group": "Your notes and documents",
+   "name": "Lecture Q&A",
+   "level": "intermediate",
+   "what": "Answers questions about your own lecture or podcast transcripts, with the time it was said",
+   "harder": "Answers questions that span several episodes, citing the time in each one",
+   "builds_on": "RAG 21, context 24",
+   "eval_idea": "Times point to where the answer is",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 5,
+   "group": "Your notes and documents",
+   "name": "Meeting notes to actions",
+   "level": "starter",
+   "what": "Turns meeting notes into a list of who does what by when",
+   "harder": "Tracks actions across meetings, and says which earlier ones are done, late or forgotten",
+   "builds_on": "Structured output 8, evals 18",
+   "eval_idea": "Actions match ones you marked by hand",
+   "twists": [
+    2,
+    4,
+    5
+   ]
+  },
+  {
+   "number": 6,
+   "group": "Your notes and documents",
+   "name": "Club or shop FAQ",
+   "level": "intermediate",
+   "what": "Answers visitors' questions from a small club's or shop's own documents, and never reveals the private ones",
+   "harder": "Hands a question it can't answer to a person, with a short note of what was asked and what it found",
+   "builds_on": "RAG 20, security 31",
+   "eval_idea": "Planted questions get nothing private",
+   "twists": [
+    1,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "number": 7,
+   "group": "Your notes and documents",
+   "name": "CV and job matcher",
+   "level": "starter",
+   "what": "Compares your CV with a job post and lists what's missing, quoting both",
+   "harder": "Suggests rewrites of your CV's bullet points for the job, using only what's true in the CV",
+   "builds_on": "RAG 20, structured output 8",
+   "eval_idea": "Gaps match ones you listed",
+   "twists": [
+    2,
+    4,
+    5
+   ]
+  },
+  {
+   "number": 8,
+   "group": "Your notes and documents",
+   "name": "Calendar helper",
+   "level": "intermediate",
+   "what": "Answers \"when am I free on Thursday?\" from your own .ics calendar file",
+   "harder": "Finds a time that suits two calendars, and writes the new event as an .ics file",
+   "builds_on": "Tools 14, context 24",
+   "eval_idea": "Free slots match the calendar",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "number": 9,
+   "group": "Learning",
+   "name": "Reading coach",
+   "level": "intermediate",
+   "what": "Picks a public-domain book (Gutendex) and quizzes you on a chapter",
+   "harder": "Makes its questions harder or easier from your answers, and tracks your progress across chapters",
+   "builds_on": "RAG 20, memory 25",
+   "eval_idea": "Quiz answers are in the text",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8
+   ]
+  },
+  {
+   "number": 10,
+   "group": "Learning",
+   "name": "Paper explainer",
+   "level": "starter",
+   "what": "Finds arXiv papers on a topic and explains one in plain words, with its link",
+   "harder": "Follows the paper's references one step out, and explains how it builds on them",
+   "builds_on": "Tools 14, agentic RAG 23",
+   "eval_idea": "The link is real; the summary matches the abstract",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 11,
+   "group": "Learning",
+   "name": "Flashcard maker",
+   "level": "intermediate",
+   "what": "Turns your notes into question and answer cards, and brings back the ones you got wrong",
+   "harder": "Schedules reviews by spaced repetition, so cards you know well come back less often",
+   "builds_on": "Memory 25",
+   "eval_idea": "Cards answerable from the notes; wrong ones come back",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 12,
+   "group": "Learning",
+   "name": "Study planner",
+   "level": "intermediate",
+   "what": "Breaks a goal into a week-by-week plan and adjusts when you report progress",
+   "harder": "Plans around your real calendar, and moves a session when you miss one",
+   "builds_on": "Planning 26, memory 25",
+   "eval_idea": "Plans fit the hours you have",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 13,
+   "group": "Learning",
+   "name": "Exam question maker",
+   "level": "starter",
+   "what": "Writes questions from a textbook chapter, with answers it can point to",
+   "harder": "Writes questions at three levels, with believable wrong options for multiple choice",
+   "builds_on": "RAG 20, evals 18",
+   "eval_idea": "Every answer is in the chapter",
+   "twists": [
+    2,
+    3,
+    4,
+    5,
+    7,
+    8
+   ]
+  },
+  {
+   "number": 14,
+   "group": "Learning",
+   "name": "Interview practice",
+   "level": "starter",
+   "what": "Asks interview questions on a topic and grades your answers against a rubric",
+   "harder": "Asks a follow-up question based on your answer, as a real interviewer would",
+   "builds_on": "Evals 18 (model as judge)",
+   "eval_idea": "Its grades agree with yours on 10 answers",
+   "twists": [
+    2,
+    4,
+    5,
+    7,
+    8
+   ]
+  },
+  {
+   "number": 15,
+   "group": "Learning",
+   "name": "Language partner",
+   "level": "intermediate",
+   "what": "Chats in a language you're learning and remembers your usual mistakes",
+   "harder": "Builds a short lesson each week from your most common mistakes",
+   "builds_on": "Memory 25, context 24",
+   "eval_idea": "Mistakes from last session come up again",
+   "twists": [
+    2,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 16,
+   "group": "Learning",
+   "name": "Maths word problems",
+   "level": "starter",
+   "what": "Solves word problems with a calculator tool; compare with no tool",
+   "harder": "Shows its working step by step, and checks each step with the tool",
+   "builds_on": "Tools 14, evals 18",
+   "eval_idea": "Score with the tool against without it",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 17,
+   "group": "Money and home",
+   "name": "Expense sorter",
+   "level": "starter",
+   "what": "Puts lines from a bank statement CSV into categories and totals them",
+   "harder": "Learns your categories from your corrections, and points out unusual spending month to month",
+   "builds_on": "Tools 14, structured output 8",
+   "eval_idea": "Totals match a sheet you did by hand; a planted line in a description changes nothing",
+   "twists": [
+    1,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 18,
+   "group": "Money and home",
+   "name": "Budget what-if",
+   "level": "starter",
+   "what": "Answers \"what if I spend 2,000 less on food?\" by running the numbers with a calculator tool",
+   "harder": "Compares several plans side by side, and finds which reaches a savings goal soonest",
+   "builds_on": "Tools 14, planning 26",
+   "eval_idea": "Numbers match a spreadsheet",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 19,
+   "group": "Money and home",
+   "name": "Recipe swapper",
+   "level": "starter",
+   "what": "Given a recipe and what's in your kitchen, suggests swaps and rescales the amounts",
+   "harder": "Plans a week of meals from your recipes and writes one shopping list",
+   "builds_on": "Tools 14, structured output 8",
+   "eval_idea": "Scaled amounts are right; no swap uses a missing item",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 20,
+   "group": "Money and home",
+   "name": "Chore planner",
+   "level": "intermediate",
+   "what": "Splits chores fairly across a week and remembers what's done",
+   "harder": "Takes everyone's preferences and days away into account, and explains each assignment",
+   "builds_on": "Memory 25, durable 27",
+   "eval_idea": "No one gets more than their share; picks up after a restart",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 21,
+   "group": "Money and home",
+   "name": "Plant care",
+   "level": "starter",
+   "what": "Tracks your plants' watering notes and checks the rain forecast before saying \"water today\"",
+   "harder": "Tailors its advice to each plant's type and the season, and keeps a watering history per plant",
+   "builds_on": "Tools 14, memory 25",
+   "eval_idea": "Advice follows the forecast and the notes",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 22,
+   "group": "Money and home",
+   "name": "Habit tracker",
+   "level": "starter",
+   "what": "Logs habits in plain words and writes an honest weekly summary",
+   "harder": "Spots patterns, such as the days you usually skip, and suggests one small change, using only the log",
+   "builds_on": "Memory 25, structured output 8",
+   "eval_idea": "Counts in the summary match the log",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 23,
+   "group": "Out and about",
+   "name": "Weather planner",
+   "level": "starter",
+   "what": "Plans a day out around the forecast (Open-Meteo) and says why",
+   "harder": "Plans a trip of several days, moving outdoor plans to the day with the best weather",
+   "builds_on": "Tools 14, planning 26",
+   "eval_idea": "The plan uses the real forecast for that place",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 24,
+   "group": "Out and about",
+   "name": "Trip notes",
+   "level": "starter",
+   "what": "Builds a one-page guide to a city from Wikipedia, with sources",
+   "harder": "Turns the guide into a day-by-day plan, with walking distances worked out from coordinates",
+   "builds_on": "Agentic RAG 23",
+   "eval_idea": "Every fact traces to a source",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 25,
+   "group": "Out and about",
+   "name": "Event planner",
+   "level": "intermediate",
+   "what": "Plans a small community event as steps, with a checklist that survives a restart",
+   "harder": "Assigns steps to volunteers and drafts a reminder for each one",
+   "builds_on": "Planning 26, durable 27",
+   "eval_idea": "Every step is done or explained after a restart",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 26,
+   "group": "Out and about",
+   "name": "Library finder",
+   "level": "starter",
+   "what": "Finds books on Open Library by topic and builds a reading list with reasons",
+   "harder": "Orders the list from beginner to advanced, and says why each book comes where it does",
+   "builds_on": "Tools 14, planning 26",
+   "eval_idea": "Every book exists and fits the topic",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 27,
+   "group": "Out and about",
+   "name": "News digest",
+   "level": "starter",
+   "what": "Picks the top Hacker News stories on a topic and sums up each in one line",
+   "harder": "Groups stories about the same event, and leaves out ones you've already seen",
+   "builds_on": "Tools 14, cost 33",
+   "eval_idea": "Links are real; one line per story",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 28,
+   "group": "Out and about",
+   "name": "Wikipedia fact checker",
+   "level": "starter",
+   "what": "Checks each claim in a paragraph against Wikipedia and marks it supported or not",
+   "harder": "Suggests a corrected sentence for each unsupported claim, with its source",
+   "builds_on": "Agentic RAG 23",
+   "eval_idea": "Planted false claims are caught",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "number": 29,
+   "group": "Code",
+   "name": "Repo tour guide",
+   "level": "intermediate",
+   "what": "Answers \"where is X done?\" about a code repo, naming the file and function",
+   "harder": "Draws a map of how the main modules call each other, as text or a Mermaid diagram",
+   "builds_on": "RAG 21, coding tools 34",
+   "eval_idea": "10 questions about a repo you know well",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 30,
+   "group": "Code",
+   "name": "Test writer",
+   "level": "intermediate",
+   "what": "Writes pytest tests for a small module, runs them in the sandbox, keeps the ones that pass",
+   "harder": "Measures coverage and writes tests aimed at the lines no test reaches",
+   "builds_on": "Coding agent 34",
+   "eval_idea": "Planted bugs: do the tests catch them?",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8
+   ]
+  },
+  {
+   "number": 31,
+   "group": "Code",
+   "name": "Code reviewer",
+   "level": "advanced",
+   "what": "Reviews a diff for bugs, and runs the tests to back up each claim",
+   "harder": "Suggests a fix for each problem it finds, as a diff it has tested",
+   "builds_on": "Coding agent 34",
+   "eval_idea": "Finds planted bugs; doesn't flag good code",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8
+   ]
+  },
+  {
+   "number": 32,
+   "group": "Code",
+   "name": "Commit message helper",
+   "level": "starter",
+   "what": "Reads a diff and writes a commit message in your project's style",
+   "harder": "Splits a messy diff into suggested separate commits, each with its own message",
+   "builds_on": "Prompting 8, evals 18",
+   "eval_idea": "Compared with 10 real messages, judged by you",
+   "twists": [
+    2,
+    4,
+    5
+   ]
+  },
+  {
+   "number": 33,
+   "group": "Code",
+   "name": "Bug triage desk",
+   "level": "starter",
+   "what": "Sorts bug reports into labels and asks for missing details",
+   "harder": "Finds likely duplicates among the reports",
+   "builds_on": "Structured output 8, evals 18",
+   "eval_idea": "15 reports you labelled by hand",
+   "twists": [
+    2,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 34,
+   "group": "Code",
+   "name": "Error explainer",
+   "level": "intermediate",
+   "what": "Runs a broken script in the sandbox, explains the traceback, and proposes a fix it has tested",
+   "harder": "Handles errors that span several files, and writes a test that would have caught the bug",
+   "builds_on": "Coding agent 34",
+   "eval_idea": "The proposed fix makes the script run",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8
+   ]
+  },
+  {
+   "number": 35,
+   "group": "Code",
+   "name": "Docstring writer",
+   "level": "intermediate",
+   "what": "Adds docstrings with examples, and runs them as doctests in the sandbox",
+   "harder": "Flags existing docstrings that no longer match the code",
+   "builds_on": "Coding agent 34",
+   "eval_idea": "Every example passes",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 36,
+   "group": "Code",
+   "name": "Regex builder",
+   "level": "intermediate",
+   "what": "Writes a regular expression from examples of what should and shouldn't match, and tests it",
+   "harder": "Explains its regex piece by piece, and looks for an example that breaks it",
+   "builds_on": "Coding agent 34, sandbox",
+   "eval_idea": "All examples behave",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    8
+   ]
+  },
+  {
+   "number": 37,
+   "group": "Code",
+   "name": "Upgrade helper",
+   "level": "advanced",
+   "what": "Bumps one package in a small project and runs the tests in the sandbox, reporting what broke",
+   "harder": "Fixes what the upgrade broke, with the tests locked",
+   "builds_on": "Coding agent 34, durable 27",
+   "eval_idea": "Report matches what really broke",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    7,
+    8
+   ]
+  },
+  {
+   "number": 38,
+   "group": "Code",
+   "name": "Log detective",
+   "level": "intermediate",
+   "what": "Answers questions about a big log file by searching it with code, not by reading it all",
+   "harder": "Finds when a problem started, and the first error before it",
+   "builds_on": "Context 24, tools 14",
+   "eval_idea": "Counts match grep",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 39,
+   "group": "Data",
+   "name": "Spreadsheet asker",
+   "level": "intermediate",
+   "what": "Answers questions about a CSV by writing plain Python and running it in the sandbox",
+   "harder": "Draws a chart when one helps answer the question, saved as an image",
+   "builds_on": "Coding agent 34, sandbox",
+   "eval_idea": "Answers match ones you worked out",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 40,
+   "group": "Data",
+   "name": "SQL helper",
+   "level": "intermediate",
+   "what": "Answers questions about a SQLite file by writing SQL that's only allowed to read",
+   "harder": "Explains its query in plain words before running it, and shows the result as a table",
+   "builds_on": "Tools 14, security 31",
+   "eval_idea": "Answers match; a request to delete is refused in code",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 41,
+   "group": "Data",
+   "name": "Data cleaner",
+   "level": "starter",
+   "what": "Finds bad rows in a CSV (missing, impossible, duplicated) and explains each",
+   "harder": "Proposes a fix for each bad row and writes a cleaned copy, leaving the original untouched",
+   "builds_on": "Tools 14, structured output 8",
+   "eval_idea": "Finds the rows you planted",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8
+   ]
+  },
+  {
+   "number": 42,
+   "group": "Play",
+   "name": "Country facts quiz",
+   "level": "starter",
+   "what": "A quiz game that checks its own questions against REST Countries",
+   "harder": "Adapts the difficulty, and brings back the countries you got wrong",
+   "builds_on": "Tools 14, evals 18",
+   "eval_idea": "No question has a wrong answer",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 43,
+   "group": "Play",
+   "name": "Murder mystery host",
+   "level": "advanced",
+   "what": "Runs a whodunit: the case file is fixed in code, the agent answers your questions as the suspects, and never contradicts the facts or gives away the culprit",
+   "harder": "Each suspect is its own agent that knows only its own story",
+   "builds_on": "Tools 14, context 24, security 31",
+   "eval_idea": "No answer contradicts the case file; asking it outright for the culprit gets nothing",
+   "twists": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 44,
+   "group": "Play",
+   "name": "Text adventure",
+   "level": "intermediate",
+   "what": "A text adventure where the world (rooms, items, doors) lives in code, and the agent narrates and moves you through it with tools",
+   "harder": "Save and load a game, and let a second player join",
+   "builds_on": "Tools 14, structured output 8, durable 27",
+   "eval_idea": "You can never use an item you don't have; the world's state is always right after 20 moves",
+   "twists": [
+    2,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 45,
+   "group": "The course's own ideas",
+   "name": "Your own MCP server",
+   "level": "intermediate",
+   "what": "Wraps one of the free APIs as an MCP server and uses it from your agent",
+   "harder": "Adds a second tool and a resource to the server, and your agent uses both",
+   "builds_on": "MCP 28-29",
+   "eval_idea": "The same eval passes through MCP and through direct tools",
+   "twists": [
+    1,
+    2,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 46,
+   "group": "The course's own ideas",
+   "name": "Moot court",
+   "level": "advanced",
+   "what": "Two lawyer agents argue a made-up dispute under a rulebook you write, and a judge rules from the court record alone. Each lawyer reads only its own client's file; anything put to the court goes on a record all three can read and no one can edit; the judge's notes stay private. The tools enforce who sees what. A simulation, not legal advice",
+   "harder": "The judge may ask each side one question on the record, and an appeal judge reviews rulings that changed when the order was swapped",
+   "builds_on": "Multi-agent 30, security 31, evals 18",
+   "eval_idea": "10 disputes with known outcomes: the right outcome and clause; the same ruling with the order swapped; three agents against one",
+   "twists": [
+    2,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 47,
+   "group": "The course's own ideas",
+   "name": "Researcher and writer",
+   "level": "advanced",
+   "what": "One agent gathers facts from Wikipedia, another writes, with sources",
+   "harder": "Adds an editor agent that checks each sentence against the sources",
+   "builds_on": "Multi-agent 30, agentic RAG 23",
+   "eval_idea": "Every fact traces to a source",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "number": 48,
+   "group": "The course's own ideas",
+   "name": "Safe email triage",
+   "level": "advanced",
+   "what": "Sorts a folder of made-up emails and drafts replies, without being talked into sending anything out",
+   "harder": "Learns your reply style from a few of your own (made-up) sent emails",
+   "builds_on": "Security 31",
+   "eval_idea": "Planted emails send nothing out",
+   "twists": [
+    1,
+    4,
+    5,
+    7,
+    8
+   ]
+  },
+  {
+   "number": 49,
+   "group": "The course's own ideas",
+   "name": "Red team",
+   "level": "advanced",
+   "what": "An agent that writes attacks on another of your agents; count what gets through and fix it in code",
+   "harder": "Writes new attacks based on the ones that worked, round after round",
+   "builds_on": "Security 31, evals 18",
+   "eval_idea": "Attacks that worked before the fix fail after it",
+   "twists": [
+    1,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 50,
+   "group": "The course's own ideas",
+   "name": "Model shoot-out",
+   "level": "advanced",
+   "what": "Your agent on two local models and one cloud model, with score, tokens and time",
+   "harder": "Picks the cheapest model that still reaches a score you set",
+   "builds_on": "Switching 32, cost 33",
+   "eval_idea": "Same eval on all three",
+   "twists": [
+    1,
+    3,
+    4,
+    7
+   ]
+  },
+  {
+   "number": 51,
+   "group": "The course's own ideas",
+   "name": "Leaner agent",
+   "level": "advanced",
+   "what": "Take any course agent and halve its tokens or time without losing score",
+   "harder": "Sends easy questions to a smaller model and hard ones to a bigger model",
+   "builds_on": "Cost 33, evals 18",
+   "eval_idea": "Score holds; tokens and time measured before and after",
+   "twists": [
+    1,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "number": 52,
+   "group": "The course's own ideas",
+   "name": "Framework port",
+   "level": "advanced",
+   "what": "Rebuild one course agent in LangGraph or Pydantic AI and compare",
+   "harder": "Ports a second agent, and writes down which framework features saved code and which got in the way",
+   "builds_on": "Frameworks 35",
+   "eval_idea": "Same eval, both versions",
+   "twists": [
+    1,
+    2,
+    3,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 53,
+   "group": "The course's own ideas",
+   "name": "Trace explainer",
+   "level": "intermediate",
+   "what": "Reads a whitebox trace and explains, step by step, why a run failed",
+   "harder": "Suggests the code change that would have prevented the failure",
+   "builds_on": "Hooks 16",
+   "eval_idea": "Its reasons match yours on 10 failed traces",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 54,
+   "group": "The course's own ideas",
+   "name": "Budget-aware agent",
+   "level": "advanced",
+   "what": "You set a budget in tokens or money. The agent never crosses it, gives its best answer when it's nearly out, and picks up where it stopped when given more",
+   "harder": "Splits the budget across questions, spending more on the hard ones",
+   "builds_on": "Cost 33, durable 27, hooks 16",
+   "eval_idea": "The budget is never crossed; how many questions still got a useful answer; a resumed run repeats nothing",
+   "twists": [
+    1,
+    2,
+    4,
+    5
+   ]
+  },
+  {
+   "number": 55,
+   "group": "Run a business",
+   "name": "Bike hire shop",
+   "level": "advanced",
+   "what": "Agents run a small bike-hire shop for a few simulated days. You choose the roles and what each may do, such as a front desk that can't change prices",
+   "harder": "Add an owner who approves anything above a role's limit, and log every request and decision",
+   "builds_on": "Multi-agent 30, security 31, tools 14",
+   "eval_idea": "No double bookings; every action above a role's limit is refused in code",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 56,
+   "group": "Run a business",
+   "name": "Café",
+   "level": "advanced",
+   "what": "Agents run a café for a day: one takes orders, one keeps the stock, one decides what to bake. You choose who may do what. Food that isn't sold is wasted",
+   "harder": "Plan tomorrow's baking from today's sales and waste",
+   "builds_on": "Multi-agent 30, security 31, tools 14",
+   "eval_idea": "Orders never exceed stock; waste is counted; no role acts above its limit",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 57,
+   "group": "Run a business",
+   "name": "Bookshop",
+   "level": "advanced",
+   "what": "A buyer agent and a seller agent run a small bookshop, and an owner agent approves orders above a budget. You set the budget and the rules",
+   "harder": "A customer says the owner promised them a discount. The seller must check with the owner, not take their word",
+   "builds_on": "Multi-agent 30, security 31, tools 14",
+   "eval_idea": "Spending stays within budget; every claimed approval is checked",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7
+   ]
+  },
+  {
+   "number": 58,
+   "group": "Run a business",
+   "name": "Plant nursery",
+   "level": "advanced",
+   "what": "Agents look after and sell plants for a simulated week, with the weather as an outside event. You choose the roles and their limits",
+   "harder": "Use the real forecast for your town from Open-Meteo",
+   "builds_on": "Multi-agent 30, security 31, tools 14",
+   "eval_idea": "No plant goes unwatered; sales never exceed stock",
+   "twists": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7
+   ]
+  }
+ ],
+ "twists": [
+  {
+   "number": 1,
+   "twist": "Must keep working when a tool or API fails: retry, then say what it couldn't do, and the eval must test that."
+  },
+  {
+   "number": 2,
+   "twist": "The test set must include one planted attack, and nothing may leave."
+  },
+  {
+   "number": 3,
+   "twist": "Must pick up where it stopped after a restart in the middle of a run."
+  },
+  {
+   "number": 4,
+   "twist": "Must be compared across two frameworks, or whitebox and one framework."
+  },
+  {
+   "number": 5,
+   "twist": "Must be compared on two models, local or cloud."
+  },
+  {
+   "number": 6,
+   "twist": "Must say \"I don't know\" when the answer isn't there, and the eval must test that."
+  },
+  {
+   "number": 7,
+   "twist": "Set your own budget, in tokens or money. The agent must stop gracefully at it, and be able to pick up again."
+  },
+  {
+   "number": 8,
+   "twist": "Split it into two agents: one builds, and one checks against a spec you approved. Neither may change the other's files, enforced in code. Compare the pair with a single agent on the same eval."
+  }
+ ]
+}

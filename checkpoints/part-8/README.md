@@ -80,4 +80,4 @@ gemini/gemini-3.6-flash 8192`, and add its prices to `PRICES` first.
 
 Worked answers are in [solutions/](solutions/). To run them, copy `solutions/checkpoint.py` over `checkpoint.py`.
 
-**Next:** that's the course. Now build something of your own with it.
+**Next:** that's the course. Now [roll for your final project](../../final-project/README.md), or build an idea of your own.

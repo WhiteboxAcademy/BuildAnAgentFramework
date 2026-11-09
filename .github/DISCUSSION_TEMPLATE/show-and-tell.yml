@@ -1,0 +1,58 @@
+title: "[Built] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Show something you built with the course: your final project, or anything else. Only the link and what you built are
+        needed. Please don't include anyone's personal data, keys or passwords.
+  - type: input
+    id: code
+    attributes:
+      label: Link to your code
+      placeholder: https://github.com/you/your-project
+    validations:
+      required: true
+  - type: input
+    id: built
+    attributes:
+      label: What you built
+      description: For a final project, the idea's number and name, or "my own idea" and a line about it.
+      placeholder: "27: News digest, harder version, with twist 2"
+    validations:
+      required: true
+  - type: input
+    id: started
+    attributes:
+      label: Where you started it
+      description: If you posted your roll in Final projects or your idea in Ideas, link that discussion here.
+      placeholder: https://github.com/WhiteboxAcademy/BuildAnAgentFramework/discussions/…
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Framework
+      options:
+        - whitebox
+        - LangGraph
+        - Pydantic AI
+        - More than one
+  - type: input
+    id: model
+    attributes:
+      label: Model
+      placeholder: ollama/qwen2.5:7b
+  - type: textarea
+    id: eval
+    attributes:
+      label: Your eval and its result
+      description: What it checks, and the score.
+  - type: textarea
+    id: used
+    attributes:
+      label: What it used
+      description: Tokens and time from the Meter, and cost on a cloud model.
+  - type: textarea
+    id: lessons
+    attributes:
+      label: What didn't work
+      description: What surprised you, what you changed, and what you'd do next. Often the most useful part.

@@ -1,0 +1,43 @@
+title: "[Final project] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One discussion per roll. Start it when you begin. Bringing your own idea instead? Post it in
+        [Ideas](https://github.com/WhiteboxAcademy/BuildAnAgentFramework/discussions/new?category=ideas). Please don't include
+        anyone's personal data, keys or passwords.
+  - type: input
+    id: roll
+    attributes:
+      label: Your roll
+      description: The course page fills this in. Anyone can see the same roll again with roll.py and this time.
+      placeholder: "Asha Rao · dice 3 and 5 · starter · 2026-11-09T14:32:07Z → 27: News digest"
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: What you're taking on
+      description: The harder version, any twists by number, and anything else you'll try.
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Framework
+      options:
+        - whitebox
+        - LangGraph
+        - Pydantic AI
+        - More than one
+        - Not decided yet
+  - type: input
+    id: model
+    attributes:
+      label: Model
+      placeholder: ollama/qwen2.5:7b
+  - type: markdown
+    attributes:
+      value: |
+        **When it's built,** start a new discussion in
+        [Show and tell](https://github.com/WhiteboxAcademy/BuildAnAgentFramework/discussions/new?category=show-and-tell), with a link
+        to your code, your eval and its result, what it used, and what didn't work. Link this discussion there, and that one here.
