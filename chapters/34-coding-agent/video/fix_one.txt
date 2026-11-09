@@ -1,0 +1,19 @@
+$ python3 fix_one.py average
+# Bug report
+
+average([]) crashes with ZeroDivisionError. An empty list should give 0.
+
+[tool] read_file({'path': 'ISSUE.md'})
+    -> '# Bug report\n\naverage([]) crashes with ZeroDivisionError. ...'
+[tool] read_file({'path': 'stats.py'})
+    -> 'def average(numbers):\n ... return sum(numbers) / len(numbers)\n'
+[tool] read_file({'path': 'tests/test_stats.py'})
+    -> 'Error: there is no file called tests/test_stats.py'
+[tool] replace_text({'path': 'stats.py', 'old': 'return sum(numbers) / len(numbers)',
+                     'new': 'return sum(numbers) / len(numbers) if numbers else 0'})
+    -> 'Changed stats.py.'
+[tool] run_tests({})
+    -> '..   [100%]\n2 passed in 0.00s\n'
+
+ollama/qwen2.5:7b: All tests passed. I modified the `average` function to handle empty lists ...
+Original tests pass: True. Hidden tests pass: True. Fixed: True.

@@ -1,0 +1,7 @@
+$ python3 read_results.py failures
+qwen2.5:7b, the 27 runs that didn't fix the bug, and how many did each of these at least once:
+    2  the model call failed
+   22  asked for a file that isn't there
+    7  replaced text that isn't in the file
+   24  never changed a file
+    3  ran the tests 4 or more times

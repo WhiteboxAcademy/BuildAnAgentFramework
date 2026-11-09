@@ -1,0 +1,6 @@
+$ python3 check_bugs.py
+ok  average      broken visible=False hidden=False  fixed (True, True)
+ok  pages        broken visible=False hidden=False  fixed (True, True)
+...
+ok  password     broken visible=False hidden=False  fixed (True, True)
+20 bugs, 0 bad

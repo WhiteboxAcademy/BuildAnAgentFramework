@@ -7,3 +7,4 @@ __pycache__/
 media/
 notes.txt
 spend.json
+mine-*.json

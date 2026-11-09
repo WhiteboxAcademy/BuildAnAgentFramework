@@ -1,0 +1,5 @@
+$ python3 read_results.py first
+Fixed means the original tests and the hidden tests pass.
+Setup                                Fixed  Tests changed  Errors
+qwen2.5:7b                          33/60           0       2
+gemini-3.1-flash-lite               20/20           0       0

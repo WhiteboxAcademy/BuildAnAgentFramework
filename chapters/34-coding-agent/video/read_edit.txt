@@ -1,0 +1,6 @@
+$ python3 read_results.py edit
+Setup                                Fixed  Tests changed  Errors
+replace exact text, 7B              33/60           0       2
+write the whole file, 7B             7/60           0       1
+replace exact text, Flash-Lite      20/20           0       0
+write the whole file, Flash-Lite    20/20           1       0

@@ -1,0 +1,11 @@
+$ python3 sandbox_check.py
+Try                    Exit  Seconds  Last line
+run the tests             0      0.4  1 passed in 0.01s
+reach the internet        1      0.2  urllib.error.URLError: <urlopen error [Errno -3] Temporary
+change the tests          2      0.1  sh: 1: cannot create tests/test_calc.py: Read-only file sy
+change the code           0      0.2  changed
+write outside             2      0.2  sh: 1: cannot create /etc/x: Read-only file system
+fill 600 MB             137      1.3  Stopped: it used more than 256m of memory.
+loop for ever           124      5.4  Stopped after 5 seconds.
+start 200 processes       0      0.2  stopped after 62
+look at your files        2      0.2  ls: cannot access '/Users': No such file or directory

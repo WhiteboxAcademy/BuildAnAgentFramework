@@ -1,0 +1,8 @@
+# Chapter 35 pins exact versions, unlike earlier chapters: what it finds about each framework (how it handles a tool error,
+# which token limit it sends to Ollama) depends on the version. Newer versions may behave differently.
+requests
+pytest
+langgraph==1.2.20
+langchain-ollama==1.1.0
+langchain-google-genai==4.4.3
+pydantic-ai-slim[openai,google]==2.66.0

@@ -1,0 +1,7 @@
+$ python3 read_results.py scores
+Fixed means the original tests and the hidden tests pass. Hard: 10 bugs. Easy: chapter 34's 20.
+Model, bugs                      whitebox    LangGraph  Pydantic AI
+Flash-Lite, hard, once               9/10         9/10         9/10
+7B, hard, 3 times                    3/30         1/30         4/30
+7B, easy, 3 times                   25/60        29/60        26/60
+Missed on Flash-Lite: whitebox split, LangGraph split, Pydantic AI split

@@ -1,0 +1,9 @@
+$ python3 read_results.py 14b
+qwen2.5:14b, hard bugs, once each
+Framework                       Fixed  Read ISSUE.md first  Crashed
+whitebox                         9/10              10/10         0
+LangGraph                        4/10              10/10         4
+Pydantic AI, with its note       0/10               2/10         0
+Pydantic AI, with it again       2/10               4/10         0
+Pydantic AI, note left out       4/10              10/10         0
+LangGraph's crashes: ResponseError: prediction aborted, token repeat limit reached (status

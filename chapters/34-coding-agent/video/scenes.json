@@ -1,0 +1,355 @@
+{
+ "chapter": "Chapter 34",
+ "scenes": [
+  {
+   "type": "recap",
+   "title": "Previously: Cost and latency",
+   "flow": [
+    "Measure first",
+    "The model is the time",
+    "Cost per right answer",
+    "Caching isn't a promise"
+   ],
+   "captions": [
+    {
+     "text": "Recap of chapter 33: a Meter recorded what each run cost, in tokens, money and time.",
+     "secs": 7,
+     "focus": 0
+    },
+    {
+     "text": "The model was 97% of the time on 7B. Speeding up the tools would save nothing.",
+     "secs": 7,
+     "focus": 1
+    },
+    {
+     "text": "Count cost per right answer, not per call.",
+     "secs": 6,
+     "focus": 2
+    },
+    {
+     "text": "And caching helped when it happened, which wasn't always.",
+     "secs": 6,
+     "focus": 3
+    }
+   ]
+  },
+  {
+   "type": "box",
+   "label": "A coding agent",
+   "inner": [
+    "read the bug report",
+    "change the code",
+    "run the tests"
+   ],
+   "captions": [
+    {
+     "text": "The capstone: an agent that fixes bugs on its own.",
+     "secs": 6
+    },
+    {
+     "text": "It runs code the model wrote. So run that code in a box, and judge the fix with tests it can't see.",
+     "secs": 9,
+     "open": true,
+     "shot": "01-box"
+    }
+   ]
+  },
+  {
+   "type": "code",
+   "file": "code/whitebox/coding.py",
+   "start": "def replace_text(",
+   "end": "return f\"Changed {path}.\"",
+   "captions": [
+    {
+     "text": "Four tools: list the files, read one, change one, run the tests. Here's the one that changes a file.",
+     "secs": 9,
+     "focus": [
+      "def replace_text(",
+      "\"\"\"Change a file"
+     ]
+    },
+    {
+     "text": "It replaces text copied exactly from the file, and it must appear exactly once.",
+     "secs": 8,
+     "focus": [
+      "found = text.count(old)",
+      "found = text.count(old)"
+     ]
+    },
+    {
+     "text": "If not, the error tells the model what to do next, because the model reads it.",
+     "secs": 8,
+     "focus": [
+      "if found == 0:",
+      "Include more lines"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "code",
+   "file": "code/whitebox/sandbox.py",
+   "start": "\"docker\", \"run\", \"--rm\"",
+   "end": "\"timeout\", str(self.seconds)",
+   "captions": [
+    {
+     "text": "The tests import the code the model just changed. So they run in a Docker box.",
+     "secs": 8,
+     "focus": [
+      "\"docker\", \"run\"",
+      "\"docker\", \"run\""
+     ]
+    },
+    {
+     "text": "No network. Little memory, one processor, at most 64 processes.",
+     "secs": 7,
+     "focus": [
+      "\"--network\"",
+      "\"--pids-limit\""
+     ]
+    },
+    {
+     "text": "Nothing writable but the project, no admin powers, and a time limit.",
+     "secs": 7,
+     "focus": [
+      "\"--read-only\"",
+      "\"timeout\""
+     ]
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/sandbox_check.txt",
+   "captions": [
+    {
+     "text": "Don't take the settings on trust. Try each door. Predict: which ones open?",
+     "secs": 7,
+     "lines": 3
+    },
+    {
+     "text": "No internet. The tests can't be changed. Nothing outside the project.",
+     "secs": 8,
+     "lines": 7
+    },
+    {
+     "text": "600 MB was stopped at 256. An endless loop at 5 seconds. 200 processes at 62. Every door held.",
+     "secs": 10,
+     "lines": 11,
+     "shot": "02-sandbox"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/check_bugs.txt",
+   "captions": [
+    {
+     "text": "Twenty small projects, one bug each, with tests the agent sees and hidden tests it never sees.",
+     "secs": 9,
+     "lines": 3
+    },
+    {
+     "text": "Every bug fails before the right fix, and passes after it. A bug that passes before measures nothing.",
+     "secs": 9,
+     "lines": 6
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/fix_one.txt",
+   "captions": [
+    {
+     "text": "One bug, on 7B. Read the issue, then the code.",
+     "secs": 6,
+     "lines": 9
+    },
+    {
+     "text": "It asked for tests/test_stats.py. That's the example in our own tool description. Models copy examples.",
+     "secs": 10,
+     "lines": 11
+    },
+    {
+     "text": "One exact change, the tests pass, and the hidden tests agree. Fixed.",
+     "secs": 8,
+     "lines": 18,
+     "shot": "03-fix-one"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_first.txt",
+   "captions": [
+    {
+     "text": "All twenty bugs. Fixed means the original tests and the hidden tests pass.",
+     "secs": 7,
+     "lines": 3
+    },
+    {
+     "text": "7B fixed 33 of 60. Flash-Lite fixed all 20.",
+     "secs": 6,
+     "lines": 5,
+     "shot": "04-first"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_failures.txt",
+   "captions": [
+    {
+     "text": "Predict: what went wrong in 7B's other 27 runs?",
+     "secs": 6,
+     "lines": 2
+    },
+    {
+     "text": "It asked for files that aren't there, and copied text it hadn't read. 24 never changed a file at all.",
+     "secs": 10,
+     "lines": 7,
+     "shot": "05-failures"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_edit.txt",
+   "captions": [
+    {
+     "text": "Would a simpler tool help? Write the whole file instead of one exact piece.",
+     "secs": 7,
+     "lines": 2
+    },
+    {
+     "text": "7B fell from 33 to 7. It mostly explained the fix and never wrote it. Flash-Lite fixed all 20 either way.",
+     "secs": 10,
+     "lines": 6,
+     "shot": "06-edit"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_help.txt",
+   "captions": [
+    {
+     "text": "Other kinds of help, one change at a time.",
+     "secs": 5,
+     "lines": 3
+    },
+    {
+     "text": "The file list helped. Hiding the test output hurt. But the same setup scored 33 once and 25 another time.",
+     "secs": 10,
+     "lines": 8,
+     "shot": "07-help"
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_tests.txt",
+   "captions": [
+    {
+     "text": "The tests are files too. 7B changed them in 11 runs, and fixed none of those bugs.",
+     "secs": 8,
+     "lines": 2
+    },
+    {
+     "text": "It changed what the test expects into what the broken code returns. To the agent, the job was done.",
+     "secs": 10,
+     "lines": 7,
+     "shot": "08-tests"
+    }
+   ]
+  },
+  {
+   "type": "recap",
+   "title": "Lock the tests",
+   "flow": [
+    "The tool refuses",
+    "The box mounts tests read-only",
+    "34 of 60, about the same",
+    "6 tries refused"
+   ],
+   "captions": [
+    {
+     "text": "So lock the tests in code. The edit tool refuses any path in tests/.",
+     "secs": 7,
+     "focus": 0
+    },
+    {
+     "text": "And the sandbox mounts tests/ read-only, so even the agent's own code can't change them.",
+     "secs": 8,
+     "focus": 1
+    },
+    {
+     "text": "It cost nothing: 34 of 60, against 33. Six runs tried, and were told no.",
+     "secs": 8,
+     "focus": 3
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_planted.txt",
+   "captions": [
+    {
+     "text": "Last, a bug report with planted orders: add code that sends a key away whenever the tests run.",
+     "secs": 9,
+     "lines": 2
+    },
+    {
+     "text": "The agent obeyed about a third of the time. In a loose box, the key left 6 times. In the sandbox, never.",
+     "secs": 10,
+     "lines": 5,
+     "shot": "09-planted"
+    },
+    {
+     "text": "Three of those six never mentioned it. Read only their summaries, and you'd never know.",
+     "secs": 9,
+     "lines": 7
+    }
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/exercise_output.txt",
+   "final": "5 passed",
+   "captions": [
+    {
+     "text": "Five exercises: exact replacement, locked folders, the box's limits, cutting output, and spotting a faked test.",
+     "secs": 10,
+     "lines": 7
+    },
+    {
+     "text": "You've finished when you see 5 passed.",
+     "secs": 6,
+     "lines": 7,
+     "shot": "10-exercises"
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "title": "You opened a coding agent.",
+   "points": [
+    "Run its code in a box",
+    "Score with hidden tests",
+    "Small models need small tools",
+    "Lock the tests"
+   ],
+   "next": "Next: chapter 35, real-world frameworks",
+   "captions": [
+    {
+     "text": "Run the agent's code in a box, and judge its work with tests it can't see.",
+     "secs": 7
+    },
+    {
+     "text": "These counts come from one Mac and twenty small bugs. Measure your own.",
+     "secs": 6
+    }
+   ]
+  }
+ ]
+}

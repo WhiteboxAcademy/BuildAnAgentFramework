@@ -1,0 +1,123 @@
+{
+ "chapter": "Chapter 35",
+ "scenes": [
+  {
+   "type": "recap",
+   "title": "Previously: A coding agent",
+   "flow": ["Four tools", "A Docker box", "Hidden tests", "Lock the tests"],
+   "captions": [
+    {"text": "Recap of chapter 34: a coding agent that reads the issue, changes the code and runs the tests.", "secs": 8, "focus": 0},
+    {"text": "The model's code ran in a box with no network, little memory and a time limit.", "secs": 7, "focus": 1},
+    {"text": "A fix counted only when tests it never saw passed too.", "secs": 6, "focus": 2},
+    {"text": "And locking the tests stopped it faking a win.", "secs": 6, "focus": 3}
+   ]
+  },
+  {
+   "type": "box",
+   "label": "Real-world frameworks",
+   "inner": ["LangGraph", "Pydantic AI", "the same coding agent"],
+   "captions": [
+    {"text": "Most people build agents with frameworks someone else wrote. Today: the same agent in two of them.", "secs": 9},
+    {"text": "Choose a framework by what it does when things go wrong, not by its score.", "secs": 8, "open": true, "shot": "01-box"}
+   ]
+  },
+  {
+   "type": "code",
+   "file": "code/agent_langgraph.py",
+   "start": "graph = StateGraph(MessagesState)",
+   "end": "return graph.compile()",
+   "captions": [
+    {"text": "In LangGraph, an agent is a graph you draw: a node for the model, a node for the tools.", "secs": 8, "focus": ["graph = StateGraph", "add_node(\"tools\""]},
+    {"text": "Call the model, and if it asked for tools, run them and go back. Chapter 12's loop, drawn.", "secs": 9, "focus": ["add_edge(START", "add_edge(\"tools\""]},
+    {"text": "That comment matters: without handle_tool_errors, a tool's error ends the whole run.", "secs": 8, "focus": ["handle_tool_errors", "handle_tool_errors"]}
+   ]
+  },
+  {
+   "type": "code",
+   "file": "code/agent_pydantic.py",
+   "start": "def model_for(spec):",
+   "end": "return OllamaModel(name, provider=ollama, profile=profile)",
+   "captions": [
+    {"text": "In Pydantic AI, an agent is an Agent with a model and tools. Here's how it reaches Ollama.", "secs": 8, "focus": ["def model_for", "def model_for"]},
+    {"text": "Two settings we had to find: which name the reply limit is sent under, and a note it adds.", "secs": 9, "focus": ["profile = {", "supports_inline_system_prompts"]},
+    {"text": "The same agent: 8 lines in whitebox, 28 in LangGraph, 35 here. Most extra lines fix a default.", "secs": 9}
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_scores.txt",
+   "captions": [
+    {"text": "Same bugs, same models, three frameworks. Predict: which scores best?", "secs": 6, "lines": 3},
+    {"text": "On Flash-Lite, all three fixed the same nine bugs and missed the same one.", "secs": 7, "lines": 4, "shot": "02-scores"},
+    {"text": "On 7B, the gaps are smaller than the run-to-run spread. The model does the fixing.", "secs": 8, "lines": 7}
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_faults.txt",
+   "captions": [
+    {"text": "So make things go wrong on purpose. A scripted model plays the same fault in each framework.", "secs": 9, "lines": 3},
+    {"text": "A wrong-type argument: both frameworks caught it. whitebox ran the tool with it. Our biggest gap.", "secs": 9, "lines": 4},
+    {"text": "An empty reply: LangGraph took it as the answer. A tool's error: both frameworks crashed by default.", "secs": 10, "lines": 7, "shot": "03-faults"},
+    {"text": "A cut-off reply fooled all three. No framework handled every fault.", "secs": 7, "lines": 12}
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_note.txt",
+   "captions": [
+    {"text": "Some problems only show up between the framework and the model. So we saved what it sent.", "secs": 9, "lines": 1},
+    {"text": "Pydantic AI added a second system message we never wrote, about <system> tags.", "secs": 8, "lines": 5},
+    {"text": "14B then wrote fake <system> messages, invented a bug report, and never read the real one.", "secs": 9, "lines": 13, "shot": "04-note"}
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_14b.txt",
+   "captions": [
+    {"text": "14B on the hard bugs. Every gap has a cause.", "secs": 6, "lines": 3},
+    {"text": "LangGraph crashed four times when Ollama aborted a reply. It doesn't retry unless you add a RetryPolicy.", "secs": 10, "lines": 4},
+    {"text": "Pydantic AI went from 0 to 4 when we left its note out.", "secs": 7, "lines": 9, "shot": "05-14b"}
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/read_tune.txt",
+   "captions": [
+    {"text": "Last, switching models. Gemini 3.6 Flash thinks, and its thinking counts against the reply limit.", "secs": 9, "lines": 3},
+    {"text": "At chapter 34's 1,024 tokens: 6 of 10. At 8,192: all 10. One number.", "secs": 8, "lines": 6, "shot": "06-tune"}
+   ]
+  },
+  {
+   "type": "recap",
+   "title": "How to choose a framework",
+   "flow": ["Make it fail on purpose", "Look at what it sends", "Read its defaults", "Count what it installs", "Run your own eval"],
+   "captions": [
+    {"text": "Make it fail on purpose, one fault at a time, and write down what it does.", "secs": 7, "focus": 0},
+    {"text": "Save what it sends, and compare it with what you wrote.", "secs": 6, "focus": 1},
+    {"text": "Read its defaults: retries, limits, and what happens to a tool's error.", "secs": 7, "focus": 2},
+    {"text": "LangGraph installed 49 packages, Pydantic AI 36. Pin the version you tested.", "secs": 8, "focus": 3},
+    {"text": "And run your own eval, on your own model, before and after any change.", "secs": 7, "focus": 4}
+   ]
+  },
+  {
+   "type": "term",
+   "file": "video/exercise_output.txt",
+   "final": "5 passed",
+   "captions": [
+    {"text": "Five exercises: a type check, a retry, a scripted model, spotting added messages, and a score table.", "secs": 10, "lines": 7},
+    {"text": "You've finished when you see 5 passed.", "secs": 6, "lines": 7, "shot": "07-exercises"}
+   ]
+  },
+  {
+   "type": "end",
+   "title": "You opened real-world frameworks.",
+   "points": ["Same model, same score", "Test the faults", "Look at what's sent", "Tune per model"],
+   "next": "Next: the Part 8 checkpoint, then your own project",
+   "captions": [
+    {"text": "A framework saves you writing a loop. It doesn't save you understanding one.", "secs": 7},
+    {"text": "You've built one, so you can read theirs.", "secs": 5}
+   ]
+  }
+ ]
+}

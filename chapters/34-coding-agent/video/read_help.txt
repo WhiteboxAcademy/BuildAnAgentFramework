@@ -1,0 +1,8 @@
+$ python3 read_results.py help
+qwen2.5:7b, 20 bugs three times each
+Setup                                Fixed  Tests changed  Errors
+nothing added                       33/60           0       2
+file list in the question           36/60           2       1
+sent back while tests fail          32/60           4       1
+both of those                       39/60           5       3
+test output cut to pass/fail        28/60           0       0

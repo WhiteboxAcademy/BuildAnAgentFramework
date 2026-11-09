@@ -1,0 +1,12 @@
+$ python3 read_results.py faults
+A scripted model plays the same fault in every framework, each at its defaults.
+Fault                    whitebox                  LangGraph                 Pydantic AI
+A wrong-type argument    broke: tool ran with it   caught                    caught
+An empty reply           recovered                 broke: took it as answer  recovered
+The same call 30 times   stopped, tool ran 2x      raised, tool ran 15x      raised, tool ran 15x
+A tool raises an error   recovered                 crashed                   crashed
+A token budget           stopped by raising        no budget: ran on         stopped by raising
+A model call fails once  recovered                 crashed                   crashed
+A reply cut off          took it as the answer     took it as the answer     took it as the answer
+A restart mid-run        resumed; repeated a step  needs another package     needs another package
+With chapter 27's once(), whitebox's restart ran each step once: True.
