@@ -31,6 +31,12 @@ HEAD = """<!doctype html>
 <meta property="og:description" content="{dek}">
 <meta property="og:url" content="{url}">
 <meta property="og:type" content="article">
+<meta property="og:site_name" content="Whitebox Academy">
+<meta property="og:image" content="https://whiteboxacademy.in/assets/og/build-an-ai-agent.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Whitebox Academy: Build an AI Agent from scratch. Free course, 35 chapters.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="{url}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
