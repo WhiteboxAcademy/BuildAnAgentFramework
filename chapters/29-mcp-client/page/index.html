@@ -424,6 +424,9 @@ FAILED test_exercises.py::test_todo_5_closest_tools - TypeError: &#x27;NoneType&
 <ul class="list"><li>Your agent went from 0 of 5 to 5 of 5 on a question only the rota could answer.</li><li><code>connect</code> tries <code>server/discover</code>, and any other reply means the handshake.</li><li><code>as_tool</code> makes a server’s tool a normal <code>Tool</code>. <code>Agent</code> and <code>Toolbox</code> didn’t change.</li><li>A tool error is text. A protocol error, silence or a stopped server raises <code>McpError</code>, and a <code>Toolbox</code> turns that into text.</li><li>The same eval was too close to rank: 110 and 109 for local, 112 for MCP.</li><li>One unrelated tool took 77 of 80 to 56, local or remote. Run your eval whenever you add tools.</li><li>Forty long tools went past the window: 12 of 60, with no error.</li><li>A tool’s text is written by someone else, and it goes into your prompt.</li><li>Production code would use the official SDK’s client, which is async.</li></ul>
 <p>These counts come from one Mac and <code>qwen2.5:7b</code>. The protocol is defined in the <a href="https://modelcontextprotocol.io/specification">MCP specification</a>, and the servers use the <a href="https://github.com/modelcontextprotocol/python-sdk">official Python SDK</a>.</p>
 </div>
+<div class="fails">
+<div><h3>Part 6 checkpoint</h3><p>You’ve finished Part 6. Before moving on, build a library catalogue over MCP, in <a href="https://github.com/WhiteboxAcademy/BuildAnAgentFramework/tree/main/checkpoints/part-6"><code>checkpoints/part-6</code></a>. It uses everything from chapters 28 and 29 and takes about 30 minutes. Run <code>python3 -m pytest test_checkpoint.py</code> until you see <code>5 passed</code>, then run it for real.</p></div>
+</div>
 <div class="next"><span>Next</span><h3>Finish the Part 6 checkpoint, then start Part 7</h3></div>
 </section>
 

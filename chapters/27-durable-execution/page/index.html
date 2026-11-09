@@ -325,7 +325,10 @@ Still unpaid: nothing</pre>      <div class="col">
         <p>We tested one job and one 7B model. A bigger model may behave differently, so measure yours.</p>
         <p>Idempotency keys are how payment services make a repeat harmless: see <a href="https://docs.stripe.com/api/idempotent_requests">Stripe’s idempotent requests</a>. “Durable execution” is the name workflow engines such as <a href="https://temporal.io">Temporal</a> use.</p>
       </div>
-      <div class="next"><span>Next</span><h3>The Part 5 checkpoint, then Part 6: MCP</h3></div>
+      <div class="fails">
+      <div><h3>Part 5 checkpoint</h3><p>You’ve finished Part 5. Before moving on, make a desk job that survives a crash, in <a href="https://github.com/WhiteboxAcademy/BuildAnAgentFramework/tree/main/checkpoints/part-5"><code>checkpoints/part-5</code></a>. It uses everything from chapters 24 to 27 and takes about 45 minutes. Run <code>python3 -m pytest test_checkpoint.py</code> until you see <code>6 passed</code>, then run it for real.</p></div>
+      </div>
+      <div class="next"><span>Next</span><h3>Finish the Part 5 checkpoint, then start Part 6</h3></div>
     </section>
 
     <footer>
